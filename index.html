@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0d10">
+<title>AERO / LAB × sense design MEI｜Roadster 空力原理示意</title>
+<meta name="description" content="互動探索 Roadster 的氣流、主動尾翼、車底吸力與白色推進噴煙。空氣力學原理示意，非實車 CFD；車型與規格以官方公布為準。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:site_name" content="AERO / LAB × sense design MEI">
+<meta property="og:title" content="來自太空科學的力量｜AERO / LAB × sense design MEI">
+<meta property="og:description" content="互動探索 Roadster 的氣流、主動尾翼、車底吸力與白色推進噴煙。空氣力學原理示意，非實車 CFD；車型與規格以官方公布為準。">
+<meta property="og:url" content="https://meimeijazz1206.github.io/roadster-aero-lab/">
+<meta property="og:image" content="https://meimeijazz1206.github.io/roadster-aero-lab/preview.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1265">
+<meta property="og:image:height" content="712">
+<meta property="og:image:alt" content="Roadster 空力原理互動展示，包含白色推進噴煙與亮橘色模擬警語">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="來自太空科學的力量｜AERO / LAB × sense design MEI">
+<meta name="twitter:description" content="互動探索 Roadster 的氣流、主動尾翼、車底吸力與白色推進噴煙。空氣力學原理示意，非實車 CFD；車型與規格以官方公布為準。">
+<meta name="twitter:image" content="https://meimeijazz1206.github.io/roadster-aero-lab/preview.jpg">
+<link rel="canonical" href="https://meimeijazz1206.github.io/roadster-aero-lab/">
+<style>
+:root{color-scheme:dark;--bg:#0a0d10;--muted:#86929c;--line:#ffffff1a;--lime:#c7f369;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#edf2f4;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",Arial,sans-serif;font-size:13px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--lime);outline-offset:5px}button{color:inherit}#app{position:relative;min-height:820px;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 45% 48%,#23303955,transparent 60%)}header{height:83px;display:flex;align-items:center;justify-content:space-between;margin:0 40px;border-bottom:1px solid var(--line);position:relative;z-index:2}.brand{font-size:15px;letter-spacing:5px;font-weight:650;display:flex;align-items:center;gap:16px}.brand svg{width:29px;height:24px}.top-meta{display:flex;align-items:center;gap:24px;color:#a2acb3;font-size:11px;letter-spacing:1px}.pill{border:1px solid #ffffff27;padding:7px 10px;border-radius:3px;font-size:10px;letter-spacing:1px}.dot{display:inline-block;width:5px;height:5px;background:var(--lime);border-radius:50%;margin-right:7px}.intro{position:absolute;top:117px;left:40px;z-index:2;pointer-events:none}.eyebrow{color:var(--lime);font:10px var(--mono);letter-spacing:2.5px;margin-bottom:12px}.intro h1{font-size:clamp(42px,5.4vw,80px);line-height:1;margin:0 0 15px;font-weight:500;letter-spacing:-3px}.intro h1 span{font-size:11px;letter-spacing:1.3px;display:inline-block;vertical-align:top;margin:10px 0 0 14px;color:var(--muted)}.intro p{font-size:13px;letter-spacing:2px;color:#a6b1b9;margin:0}.subtitle{margin-top:16px!important;font-size:11px!important;color:#6e7b85!important;letter-spacing:.2px!important}.scene{position:absolute;inset:85px 280px 122px 0;touch-action:none}.scene canvas{display:block;width:100%;height:100%;outline:none}.scene:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -45px 65px -45px #0a0d10}.axis-label{position:absolute;left:40px;top:51%;color:#65727c;font:10px var(--mono);letter-spacing:2px;pointer-events:none}.axis-label b{display:block;margin-top:9px;color:#a6b3bc;font-size:20px;font-weight:400}.legend{position:absolute;left:40px;bottom:200px;z-index:2;width:170px;pointer-events:none}.legend-title{display:flex;justify-content:space-between;font-size:10px;color:#8d9aa4;margin-bottom:9px}.gradient{height:3px;background:linear-gradient(90deg,#2375ff,#37c8ed,#c4db68,#ffad44,#ff4e49);border-radius:3px}.legend-ticks{display:flex;justify-content:space-between;font:9px var(--mono);color:#78858e;margin-top:7px}.viewbar{position:absolute;bottom:141px;left:40px;right:322px;display:flex;align-items:center;justify-content:space-between;gap:15px;z-index:3}.views{display:flex;border:1px solid var(--line);border-radius:5px;background:#11171bbb;padding:4px;gap:4px}.views button{border:0;background:transparent;padding:10px 14px;color:#7e8c96;font-size:11px;border-radius:3px;white-space:nowrap}.views button[aria-pressed=true]{background:#293139;color:#f0f4f6}.gesture{color:#6b7781;font-size:10px;white-space:nowrap}.panel{position:absolute;top:117px;right:40px;bottom:138px;width:260px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(135deg,#1a2229b8,#10161dd9);backdrop-filter:blur(16px);z-index:4;padding:21px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}.panel>*{flex-shrink:0}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.panel-head h2{font-size:13px;font-weight:500;letter-spacing:1px;margin:0}.panel-head span{font:10px var(--mono);color:#697983}.section-title{font:9px var(--mono);color:#778995;letter-spacing:1.8px;margin-bottom:13px}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:16px;cursor:pointer;min-height:28px}.toggle-row strong{font-size:12px;font-weight:400;display:block}.toggle-row small{font-size:9px;display:block;color:#70808b;margin-top:4px}.switch{position:relative;flex-shrink:0;width:30px;height:18px}.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.switch span{display:block;width:100%;height:100%;background:#384149;border-radius:15px;pointer-events:none;transition:background .15s}.switch span:after{content:"";position:absolute;top:4px;left:4px;width:10px;height:10px;border-radius:50%;background:#adb7be;transition:transform .15s}.switch input:checked+span{background:var(--lime)}.switch input:checked+span:after{transform:translateX(12px);background:#20291a}.switch input:focus-visible+span{outline:2px solid white;outline-offset:3px}.divider{height:1px;background:var(--line);margin:4px 0 20px;flex-shrink:0}.range-block{margin-bottom:22px}.range-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:11px}.range-label output{font:19px var(--mono);color:#eef3f5}.range-label output small{font-size:9px;color:#8a9ba6}.range-block input[type=range]{width:100%;height:16px;cursor:pointer;appearance:none;background:transparent;margin:0}.range-block input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,var(--lime) var(--fill,50%),#3a454e var(--fill,50%));border-radius:2px}.range-block input[type=range]::-webkit-slider-thumb{appearance:none;width:10px;height:10px;border-radius:50%;margin-top:-4px;background:var(--lime);box-shadow:0 0 0 3px #c7f36914}.range-block input[type=range]::-moz-range-track{height:2px;background:#3a454e}.range-block input[type=range]::-moz-range-progress{height:2px;background:var(--lime)}.range-block input[type=range]::-moz-range-thumb{width:10px;height:10px;border:0;background:var(--lime);border-radius:50%}.endpoints{display:flex;justify-content:space-between;color:#62737e;font:9px var(--mono);margin-top:7px}.play-row{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:3px}.play{width:100%;border:1px solid #c7f36955;background:#c7f3690b;border-radius:4px;height:36px;font-size:11px;color:#d7ecae;letter-spacing:1px}.play b{margin-right:8px;font-size:11px;font-weight:400}.reset{background:none;border:1px solid var(--line);border-radius:4px;height:36px;width:36px;flex-shrink:0;color:#a0adb5;font-size:17px}.panel-note{color:#6c7f8c;font-size:9px;line-height:1.7;margin:12px 0 0}.hud{position:absolute;left:40px;right:40px;bottom:30px;height:91px;border-top:1px solid var(--line);display:grid;grid-template-columns:1.18fr 1fr 1fr 1.15fr;z-index:3;padding-top:18px}.hud-cell{border-right:1px solid var(--line);padding:0 26px}.hud-cell:first-child{padding-left:0}.hud-cell:last-child{border:0;padding-right:0}.hud-label{font-size:10px;color:#7e909c;letter-spacing:1px;margin-bottom:9px}.metric{font:29px var(--mono);line-height:1;color:#e5edef}.metric small{font-size:11px;color:#8a9ca8;margin-left:5px}.metric.accent{color:var(--lime)}.meter{height:2px;width:145px;background:#29343b;margin-top:10px}.meter i{display:block;height:100%;width:40%;background:var(--lime);transition:width .15s}.hud-sub{color:#71848f;font-size:9px;margin-top:7px}.mode{font-size:14px;letter-spacing:1px;margin-top:4px}.info-btn{background:none;border:0;padding:0;color:#99aab6;text-decoration:underline;text-underline-offset:4px;font-size:10px;position:absolute;right:0;bottom:0}.scene-tag{position:absolute;left:52%;top:30%;color:#adc0cd;font:9px var(--mono);letter-spacing:1.3px;pointer-events:none;border-left:1px solid #748b9455;padding-left:11px;line-height:1.7}.scene-tag b{display:block;color:#d4e8f5;font-size:11px;font-weight:400}.loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#0a0d10ee;z-index:10;color:#94a3ad;font-size:12px;line-height:1.8;text-align:center;padding:30px}.loader[hidden]{display:none}.spinner{width:24px;height:24px;border-radius:50%;border:1px solid #ffffff20;border-top-color:var(--lime);animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}dialog{background:#121a20;color:#cbd6de;max-width:560px;width:calc(100% - 36px);border:1px solid #ffffff26;border-radius:9px;padding:28px;line-height:1.9;font-size:12px}dialog::backdrop{background:#000b;backdrop-filter:blur(8px)}dialog h2{font-size:19px;font-weight:500;color:white;margin-top:0}dialog button{float:right;border:1px solid #ffffff30;padding:7px 18px;border-radius:4px;background:#26343d}dialog code{font-size:10px;color:var(--lime)}dialog a{color:#c7f369}dialog p{margin:14px 0}dialog .formula{background:#0b1115;padding:12px;border-radius:4px;font-family:var(--mono);font-size:11px}.mobile-hint{display:none}
+@media(min-height:930px){.panel{top:117px;bottom:138px}.viewbar{bottom:160px}.scene{bottom:145px}.legend{bottom:225px}}
+@media(max-width:1050px){header{margin:0 24px}.intro{left:24px}.intro h1{font-size:54px}.intro h1 span{display:block;margin:10px 0 0;font-size:9px}.intro p{font-size:11px}.panel{right:24px;width:230px;padding:18px}.scene{right:235px}.viewbar{left:24px;right:278px}.gesture{display:none}.hud{left:24px;right:24px}.axis-label,.legend{left:24px}.hud-cell{padding:0 18px}.top-meta{gap:12px}.scene-tag{display:none}}
+@media(max-width:700px){#app{min-height:1150px;height:auto;overflow:hidden}header{height:65px;margin:0 20px}.brand{font-size:12px;letter-spacing:3px;gap:10px}.top-meta>span:first-child{display:none}.top-meta{font-size:9px}.pill{font-size:8px;padding:6px 7px}.intro{top:93px;left:20px}.intro h1{font-size:47px;letter-spacing:-2px;margin-bottom:13px}.intro h1 span{display:inline-block;margin:8px 0 0 9px;font-size:8px;letter-spacing:.6px}.eyebrow{font-size:8px;margin-bottom:10px}.intro p{font-size:11px}.subtitle{font-size:9px!important;margin-top:10px!important}.scene{top:194px;left:0;right:0;bottom:auto;height:375px}.axis-label{display:none}.legend{left:20px;top:500px;bottom:auto;width:120px}.legend-title{font-size:9px}.legend-ticks{font-size:8px}.viewbar{top:565px;left:20px;right:20px;bottom:auto;justify-content:center}.views{width:100%;justify-content:space-around}.views button{flex:1;padding:11px 9px}.panel{position:relative;top:auto;left:auto;right:auto;bottom:auto;margin:571px 20px 0;width:auto;height:auto;display:grid;grid-template-columns:1fr 1fr;column-gap:24px;padding:20px;overflow:visible}.panel-head{grid-column:1/-1;margin-bottom:19px}.layers{grid-column:1}.sliders{grid-column:2}.section-title{font-size:8px;margin-bottom:11px}.toggle-row{margin-bottom:16px}.toggle-row strong{font-size:11px}.toggle-row small{font-size:8px}.panel>.divider{display:none}.range-block{margin-bottom:19px}.range-label{margin-bottom:8px}.range-label output{font-size:18px}.play-row{grid-column:1/-1}.panel-note{grid-column:1/-1;font-size:8px;margin-top:9px}.hud{position:relative;top:auto;left:auto;right:auto;bottom:auto;margin:28px 20px 50px;height:auto;grid-template-columns:1fr 1fr;row-gap:24px}.hud-cell{padding:0 0 0 18px}.hud-cell:nth-child(2){border:0}.hud-cell:nth-child(3){padding-left:0}.hud-cell:nth-child(4){padding-left:18px}.metric{font-size:25px}.hud-label{font-size:9px}.info-btn{bottom:-34px;left:0;right:auto;font-size:9px}#app{padding-bottom:55px;min-height:1220px}.meter{width:110px}.mobile-hint{display:block;text-align:center;position:absolute;top:608px;left:0;right:0;font-size:9px;color:#5e717d}.mode{font-size:12px}.hud-sub{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none}*{scroll-behavior:auto!important}}
+
+/* Physics teaching edition */
+html{scroll-behavior:smooth}#app{min-height:740px}a{color:var(--lime)}.top-meta a{text-decoration:none;font-size:11px}.pill{color:#cce6a0}.subtitle{color:#a4b3bd!important;letter-spacing:.2px!important}.intro h1{font-size:clamp(42px,4.7vw,70px)}.panel{width:282px;padding:20px}.scene{right:300px}.viewbar{right:344px}.panel-head{margin-bottom:18px}.panel-note{font-size:10px;color:#9babb5}.toggle-row small{color:#93a4af}.section-title{color:#9dafb9}.range-block{margin-bottom:18px}.endpoints{color:#8fa1ae}.hud-sub{color:#9caeb9}.hud-label{color:#b1bec7}.legend-title,.legend-ticks{color:#a4b7c4}.legend{width:205px}.scene-caption{position:absolute;left:40px;bottom:300px;width:225px;z-index:2;pointer-events:none;background:linear-gradient(90deg,#0a0d10cc,transparent);padding:10px 0}.scene-caption b{font-size:11px;color:#d4e6ba;font-weight:500}.scene-caption p{font-size:10px;line-height:1.8;color:#a1b1bd;margin:7px 0 0}.mode-buttons{display:flex;gap:4px;margin:7px 0 9px}.mode-buttons button{flex:1;padding:8px 3px;border:1px solid #ffffff20;background:transparent;border-radius:4px;color:#93a5af;font-size:10px}.mode-buttons button[aria-pressed=true]{background:#c7f36917;color:var(--lime);border-color:#c7f36960}.control-tip{font-size:10px;line-height:1.7;color:#91a6b2;margin:0 0 18px}.parameter-heading{font-size:11px;color:#bac7cf}.panel details{border-top:1px solid var(--line);padding-top:16px;margin:0 0 15px}.panel summary{cursor:pointer;font-size:11px;color:#b4c4cd;margin-bottom:15px}.panel .play-row{position:sticky;bottom:-20px;background:#141c22;padding:10px 0;margin-top:0}.readout-unit{color:#b4c4cd}.scene-tag{left:52%;top:31%}.intro p{letter-spacing:1px}.axis-label{top:40%;font-size:9px}.meter{display:none}.info-btn{font-size:11px}.hud{height:96px}.hud-cell{padding:0 20px}.hud-cell:last-of-type{border:0}.hud-sub{line-height:1.5}.model-detail{max-width:1500px;margin:auto;padding:65px 40px 60px;border-top:1px solid var(--line)}.detail-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:30px}.detail-heading h2{font-size:30px;font-weight:500;letter-spacing:-.8px;margin:10px 0}.detail-heading p{margin:0;color:#9caeba;font-size:12px;line-height:1.9;max-width:500px}.chapter{font:10px var(--mono);letter-spacing:2px;color:var(--lime)}.detail-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:20px}.detail-card{border:1px solid var(--line);border-radius:9px;background:linear-gradient(130deg,#18232a,#10171c);padding:26px;min-width:0}.detail-card h3{font-size:17px;font-weight:500;margin:0 0 12px}.detail-card p{font-size:12px;line-height:1.9;color:#a7b9c5;margin:12px 0}.live-kicker{color:#9cb1bf;font:10px var(--mono);letter-spacing:1px}.accel{font:38px var(--mono);color:var(--lime);margin:13px 0 5px}.accel small{font-size:12px;color:#9aafbd}.force-row{display:grid;grid-template-columns:115px 1fr 82px;gap:12px;align-items:center;margin:15px 0;font-size:11px}.force-row output{text-align:right;font:12px var(--mono)}.bar-track{background:#ffffff0b;height:5px;border-radius:3px;overflow:hidden}.bar-track i{display:block;height:100%;background:#c7f369;transition:width .18s}.force-row.jet i{background:#5fcde6}.force-row.loss i{background:#d69b78}.inline-formula{font:11px/1.9 var(--mono);color:#b8cbd6;background:#07101499;padding:14px;border-radius:5px;overflow-wrap:anywhere}.metrics-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:15px}.metrics-table td,.metrics-table th{text-align:left;padding:11px 0;border-bottom:1px solid #ffffff12;vertical-align:top}.metrics-table th{font-weight:400;color:#9aacb7}.metrics-table td:last-child{text-align:right;color:#dce8ed;font-family:var(--mono)}.state-line{border-left:2px solid var(--lime);padding-left:12px;font-size:12px!important;color:#c9ddbc!important}.reason-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:22px 0 35px}.reason{border:1px solid var(--line);border-radius:7px;padding:22px}.reason span{font:10px var(--mono);color:var(--lime)}.reason h3{font-size:14px;font-weight:500;margin:10px 0}.reason p{font-size:11px;line-height:1.9;color:#9cafbc;margin:0}.audit-details{border-top:1px solid var(--line);padding:22px 0}.audit-details summary{font-size:14px;cursor:pointer;color:#ccd9e0}.audit-details p,.audit-details li{color:#a7b9c5;font-size:12px;line-height:1.9}.assumption-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:12px}.assumption-table th,.assumption-table td{text-align:left;border-bottom:1px solid #ffffff15;padding:12px 16px 12px 0;vertical-align:top;line-height:1.8}.assumption-table th{color:#b8cbd6;font-weight:500}.assumption-table td{color:#9db1be}.assumption-table td:nth-child(2){color:#d5e3e9}.source-list{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}.source-item{border-left:1px solid #586b77;padding-left:16px}.source-item b{font-size:12px;font-weight:500}.source-item p{font-size:11px;color:#98acba;margin:7px 0;line-height:1.8}.detail-footer{display:flex;justify-content:space-between;gap:20px;margin-top:30px;font-size:10px;line-height:1.8;color:#8da1ad}.model-badge{display:inline-block;border:1px solid #c7f36940;color:#c7f369;border-radius:3px;padding:4px 7px;font-size:9px;letter-spacing:1px}.input-note{font-size:9px;line-height:1.6;color:#a2b4bf;margin-top:8px}dialog{max-width:650px;max-height:85svh;overflow:auto}dialog .formula{line-height:1.9}dialog button{float:none;display:block;margin-left:auto}#physics-details{scroll-margin-top:24px}.study-control{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}.study-control .range-label{font-size:12px}.study-control input[type=range]{width:100%;accent-color:var(--lime)}.study-control output{color:#dfefc8}.systems{margin-bottom:16px}.systems .toggle-row{margin-bottom:13px}.legend-note{font-size:9px;color:#8ba2b1;margin-top:7px;line-height:1.7}
+@media(max-width:1050px){.panel{right:24px;width:250px}.scene{right:260px}.viewbar{right:298px}.scene-caption{left:24px;width:190px}.intro h1{font-size:50px}.top-meta>span:first-child{display:none}.model-detail{padding:45px 24px}.force-row{grid-template-columns:98px 1fr 74px;gap:8px}.detail-card{padding:22px}}
+@media(max-width:700px){.brand{white-space:nowrap;flex-shrink:0;letter-spacing:2px;font-size:11px;gap:8px}.brand svg{width:22px}.top-meta .pill{display:none}.top-meta a{font-size:10px;white-space:nowrap}.pill{font-size:8px}.top-meta{gap:10px}.intro h1{font-size:43px}.intro h1 span{display:block;margin:8px 0 0}.intro{top:89px}.intro .subtitle{font-size:10px!important;max-width:330px;line-height:1.6}.scene{top:215px;right:0;height:370px}.legend{top:523px;left:20px;width:160px}.scene-caption{left:auto;right:20px;bottom:auto;top:485px;width:150px;text-align:right;background:none}.scene-caption p{font-size:9px;line-height:1.6}.scene-caption b{font-size:10px}.viewbar{top:602px;left:20px;right:20px}.views button{padding:11px 6px;font-size:10px}.mobile-hint{top:649px}.panel{display:flex;position:relative;margin:612px 20px 0;right:auto;width:auto;padding:20px}.panel .systems{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.panel .systems .section-title{grid-column:1/-1}.panel .sliders{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.panel .sliders .section-title,.panel .mode-area{grid-column:1/-1}.panel .play-row{position:static;background:none;padding-bottom:0}.panel .layers{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.panel .layers .section-title{grid-column:1/-1}.toggle-row strong{font-size:12px}.toggle-row small{font-size:9px}.panel-note{font-size:10px}.panel .divider{display:block}.hud{height:auto}.hud-sub{font-size:9px}.info-btn{font-size:11px}.detail-heading{display:block}.detail-heading h2{font-size:27px}.detail-heading p{margin-top:14px}.model-detail{padding:35px 20px}.detail-grid,.reason-grid,.source-list{grid-template-columns:1fr}.detail-card{padding:21px}.reason-grid{gap:12px}.reason{padding:20px}.force-row{grid-template-columns:100px 1fr 76px}.detail-footer{display:block}.assumption-table{font-size:10px}.assumption-table th,.assumption-table td{padding-right:10px}.detail-card p,.reason p{font-size:12px}#app{min-height:0;padding-bottom:28px}}
+
+.launch-metric{position:absolute;right:344px;top:117px;width:175px;text-align:right;z-index:3}.launch-metric .launch-label{font-size:9px;letter-spacing:1px;color:#bac8d0}.launch-metric strong{display:block;font:52px/1.2 var(--mono);letter-spacing:-2px;color:#edf2f4;margin:5px 0}.launch-metric strong small{font-size:14px;letter-spacing:0;margin-left:5px;color:#b7c6cf}.launch-metric .launch-range{font:11px var(--mono);color:#c9d7df}.launch-metric a{display:block;font-size:9px;margin-top:8px;color:#a9bac5;text-underline-offset:3px}.launch-metric .launch-note{font-size:8px;line-height:1.7;color:#94a9b6;margin-top:7px}
+.brand{gap:10px;letter-spacing:1px;font-size:13px;white-space:nowrap}.brand-lab{font-weight:600}.brand-x{color:#758b99;font-weight:400}.brand-name{font-weight:400;letter-spacing:.4px}.jet-note{display:block;color:#758b99;margin-top:7px}.jet-note:before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#56636b}.jet-note.active{color:#edf2f4}.jet-note.active:before{background:#fff;box-shadow:0 0 8px #ffffff55}.reference-note{border-top:1px solid var(--line);padding-top:14px;font-size:10px;line-height:1.8;color:#a4b6c1}.guide-control{margin-bottom:12px}
+@media(min-width:701px) and (max-width:1050px){.launch-metric{width:115px;right:330px}.launch-metric strong{font-size:34px}.launch-metric .launch-note{font-size:8px}.intro h1{font-size:40px}.top-meta>span:first-child{display:none}}
+@media(max-width:700px){.brand{font-size:10px;gap:6px;letter-spacing:.4px}.brand-name{letter-spacing:0}.top-meta{gap:5px}.top-meta a{font-size:9px}.legend{top:565px}.legend-note{font-size:8px}.guide-control{grid-column:1/-1}.launch-metric{top:231px;left:20px;right:20px;width:auto;text-align:left;display:grid;grid-template-columns:100px 1fr;column-gap:14px}.launch-metric .launch-label{grid-column:1/-1;font-size:8px}.launch-metric strong{font-size:36px;grid-row:2/5;margin:3px 0 0}.launch-metric .launch-range{margin-top:6px}.launch-metric a{margin-top:5px;font-size:8px}.launch-metric .launch-note{margin-top:2px;font-size:7px}.scene{top:285px}.scene-caption{top:555px}.viewbar{top:672px}.mobile-hint{top:719px}.panel{margin-top:682px}}
+
+
+:root{--notice:#ffab5c;--notice-line:#ff8a3d80}
+.notice,.notice :is(span,strong,b,small,a),.assumption-table tbody td:last-child{color:var(--notice)!important}
+.legend.is-inactive :is(.legend-title,.gradient,.legend-ticks){opacity:.35}
+.pill.notice{border-color:var(--notice-line);background:#ff8a3d0b}.pill.notice .dot{background:var(--notice)}
+.intro .subtitle{line-height:1.8}.reference-note.notice{border-top-color:var(--notice-line)}
+@media(max-width:700px){.launch-metric{top:251px}.scene{top:305px}.scene-caption{top:575px}.legend{top:585px}.viewbar{top:692px}.mobile-hint{top:739px}.panel{margin-top:702px}}
+
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<main id="app">
+<header><div class="brand"><span class="brand-lab">AERO / LAB</span><span class="brand-x">×</span><span class="brand-name">sense design MEI</span></div><div class="top-meta"><span>物理教學展示</span><span class="pill notice"><i class="dot"></i>教學模型 · 非實車 CFD</span><a href="#physics-details">計算與解說 ↓</a></div></header>
+<section class="intro"><div class="eyebrow">TESLA ROADSTER / GENERATION II</div><h1>Invisible force.<span>來自太空科學的力量</span></h1><p>探索氣流如何塑造貼地性能。</p><p class="subtitle notice">空氣力學原理示意｜非實車 CFD<br>車型為模擬示意，外觀與規格以官方公布為準。</p></section>
+<aside class="launch-metric" aria-label="Tesla 官方展示加速成績"><div class="launch-label">TESLA 官方展示宣稱</div><strong>0.81<small>秒</small></strong><div class="launch-range">0–60 mph · 約 0–96.6 km/h</div><a href="https://x.com/Tesla/status/2110963770763649487" target="_blank" rel="noopener">查看官方原始影片 ↗</a><div class="launch-note notice">非本頁模擬結果；未獨立驗證。<br>完整測試與起步計時條件尚未取得。</div></aside><div id="scene" class="scene" role="img" aria-label="可拖曳旋轉的白色 Roadster 3D 概念車與空氣流線"><div class="loader" id="loader"><div class="spinner"></div><span id="load-message">正在建立風洞場景…</span></div></div>
+<div class="axis-label">車輛前進 ←<b>來流方向 →</b></div>
+<div class="scene-tag" id="scene-tag">INTEGRATED AERO<b>整合式尾翼 / <span id="tag-angle">0</span>°</b></div>
+<div class="legend" id="legend"><div class="legend-title"><span>模型局部氣流速度</span><span>m/s</span></div><div class="gradient" id="speed-gradient"></div><div class="legend-ticks"><span>0</span><span>50</span><span>100+</span></div><div class="legend-note"><span class="notice">彩色粒子：慢動作 · 疏密不代表空氣密度</span><span class="jet-note" id="jet-status">白煙：後噴嘴關閉</span><span class="notice">白煙濃淡與擴散僅為視覺示意</span></div></div>
+<div class="scene-caption"><b id="mode-badge">低速密封抽吸</b><p id="flow-note"></p></div>
+<nav class="viewbar" aria-label="預設鏡頭"><div class="views"><button data-view="front" aria-pressed="true">↗ 車頭 3/4</button><button data-view="side" aria-pressed="false">↔ 正側面</button><button data-view="under" aria-pressed="false">⊙ 車底仰視</button><button data-view="rear" aria-pressed="false">↖ 車尾</button></div><span class="gesture">拖曳旋轉 · 滾輪縮放</span></nav><span class="mobile-hint">單指旋轉 · 雙指縮放</span>
+<aside class="panel" aria-label="空力控制面板">
+<div class="panel-head"><h2>風洞控制台</h2><span>MODEL / 02</span></div>
+<div class="systems"><div class="section-title">01 / 系統啟停 · 影響計算</div>
+<label class="toggle-row"><span><strong>車底風扇</strong><small>抽氣產生壓差</small></span><span class="switch"><input id="suction" type="checkbox" checked aria-label="車底風扇啟停"><span></span></span></label>
+<label class="toggle-row"><span><strong>冷氣體推進器</strong><small>白色噴煙 · <span class="notice">假設 4 kN</span></small></span><span class="switch"><input id="jets" type="checkbox" aria-label="冷氣體推進器啟停"><span></span></span></label></div>
+<div class="sliders"><div class="section-title">02 / 模型條件</div>
+<div class="range-block"><label class="range-label" for="speed">比較車速 <output id="speed-out">160 <small>km/h</small></output></label><input type="range" id="speed" min="0" max="320" value="160" step="5"><div class="endpoints"><span>靜止</span><span>320 km/h</span></div><div class="input-note"><span class="notice">設定當下工況；不會隨推力自動加速。</span></div></div>
+<div class="range-block"><label class="range-label" for="angle">尾翼角度 <output id="angle-out">18 <small>°</small></output></label><input type="range" id="angle" min="0" max="35" value="18" step="1"><div class="endpoints"><span>0° 收合</span><span>35°</span></div><div class="input-note"><span class="notice">22° 後加入失速近似，非實車臨界角。</span></div></div>
+<div class="range-block"><label class="range-label" for="fanLevel">風扇轉速比例 <output id="fanLevel-out">80 <small>%</small></output></label><input type="range" id="fanLevel" min="0" max="100" value="80" step="5"><div class="endpoints"><span>0%</span><span><span class="notice">100% 假設額定轉速</span></span></div></div>
+<div class="mode-area"><div class="parameter-heading">車底通道</div><div class="mode-buttons" aria-label="車底通道模式"><button data-mode="auto" aria-pressed="true">自動</button><button data-mode="sealed" aria-pressed="false">密封</button><button data-mode="open" aria-pressed="false">開放</button></div><p class="control-tip notice">自動模式在 140–200 km/h 漸開通道；切換速度為教學假設。尾翼由滑桿獨立控制。</p></div></div>
+<label class="toggle-row guide-control"><span><strong>側面導板展開</strong><small id="guide-state" class="notice">收合 · 可切換展開</small></span><span class="switch"><input id="sideGuides" type="checkbox" aria-label="側面導板展開示意"><span></span></span></label>
+<details><summary>顯示圖層與播放</summary><div class="layers">
+<label class="toggle-row"><span><strong>車身／車底氣流</strong><small><span class="notice">流管近似 · 非 CFD</span></small></span><span class="switch"><input id="flow" type="checkbox" checked aria-label="氣流粒子"><span></span></span></label>
+<label class="toggle-row"><span><strong>X 光透視</strong><small><span class="notice">內部配置為假設</span></small></span><span class="switch"><input id="xray" type="checkbox" aria-label="X 光透視"><span></span></span></label>
+<label class="toggle-row"><span><strong>尾翼氣流</strong><small>只控制顯示</small></span><span class="switch"><input id="wingflow" type="checkbox" checked aria-label="尾翼氣流"><span></span></span></label>
+</div><div class="range-block"><label class="range-label" for="rate">播放倍率 <output id="rate-out">1.0 <small>×</small></output></label><input type="range" id="rate" min="0.25" max="2" value="1" step="0.05"><div class="endpoints"><span>0.25×</span><span>2× · 不改變受力</span></div></div></details>
+<div class="play-row"><button id="play" class="play" aria-pressed="false"><b>Ⅱ</b><span>暫停氣流</span></button><button id="reset" class="reset" aria-label="重設所有參數與鏡頭" title="重設">↺</button></div><p class="panel-note notice">所有儀表均為教學模型估算。<br>下方可查看推力來源、公式與每項假設。</p></aside>
+<section class="hud" aria-label="即時空力儀表"><div class="hud-cell"><div class="hud-label"><span class="notice">↓ 總下壓力 · 模型估算</span></div><div class="metric accent"><span id="total">0</span><small>kgf</small></div><div class="hud-sub">公斤力 · 1 kgf ≈ 9.81 N</div></div><div class="hud-cell"><div class="hud-label">車身＋尾翼 · 被動空力</div><div class="metric"><span id="aero">0</span><small>kgf</small></div><div class="hud-sub" id="aero-breakdown"></div></div><div class="hud-cell"><div class="hud-label">風扇抽吸 · 主動壓差</div><div class="metric"><span id="fan-force">0</span><small>kgf</small></div><div class="hud-sub" id="pressure"></div></div><div class="hud-cell"><div class="hud-label"><span class="notice">瞬時加速度 · 假設質量</span></div><div class="metric"><span id="hud-accel">0.00</span><small>m/s²</small></div><div class="hud-sub"><i class="dot" id="status-dot"></i><span id="status">工況比較中</span><span id="view-status" hidden></span></div></div><button class="info-btn" id="info">模型範圍與操作 ↗</button></section>
+</main>
+<section class="model-detail" id="physics-details" aria-label="物理計算與來源解說">
+<div class="detail-heading"><div><span class="chapter">READ THE FORCES / 理解受力</span><h2>快，與貼地，是兩件事。</h2></div><p>馬達與噴嘴提供前進推力；下壓力增加輪胎的接地負載。<br>先分清力的方向，再看它們如何影響加速與抓地力。</p></div>
+<div class="detail-grid">
+<article class="detail-card"><span class="live-kicker">01 / 水平受力 · 目前 <span id="speed-inline">160</span> km/h</span><h3 style="margin-top:12px">速度從哪裡來？</h3>
+<div class="accel"><output id="accel">0.00</output> <small>m/s² 當下加速度</small></div><p id="accel-note" class="notice">依設定車速計算瞬時受力，並非加速測試。</p>
+<p class="input-note">力的共用刻度：0–35 kN</p><div class="force-row"><span>輪胎驅動力 ＋</span><div class="bar-track"><i id="drive-bar"></i></div><output id="drive-val"></output></div>
+<div class="force-row jet"><span>噴嘴推力 ＋</span><div class="bar-track"><i id="jet-bar"></i></div><output id="jet-val"></output></div>
+<div class="force-row loss"><span>風阻＋滾阻 −</span><div class="bar-track"><i id="loss-bar"></i></div><output id="loss-val"></output></div>
+<div class="inline-formula">a =（輪胎驅動力 + 噴嘴推力 − 風阻 − 滾阻）/ 車重<br><span id="balance-equation"></span></div>
+<div class="study-control"><label class="range-label" for="throttle">馬達輸出要求 <output id="throttle-out">70%</output></label><input type="range" id="throttle" min="0" max="100" step="5" value="70" aria-label="馬達輸出要求"><div class="input-note"><span class="notice">改變瞬時推力；上方「比較車速」維持你指定的工況。</span></div></div>
+<p>輪胎驅動力受馬達功率、最大輪上力與抓地上限共同限制。<span class="notice">這裡採固定摩擦係數；真實輪胎的負載敏感性與前後軸分配未求解。</span></p></article>
+<article class="detail-card"><span class="live-kicker">02 / 垂直受力 · 與壓差、動壓連動</span><h3 style="margin-top:12px">下壓力如何改變？</h3><p class="state-line notice" id="mode-explanation"></p>
+<table class="metrics-table"><tbody><tr><th scope="row">來流動壓 q = ½ρv²</th><td id="q-value"></td></tr><tr><th scope="row">車身／車底被動下壓力</th><td id="body-value"></td></tr><tr><th scope="row">尾翼下壓力</th><td id="wing-value"></td></tr><tr><th scope="row">風扇抽氣流量</th><td id="flow-value"></td></tr><tr><th scope="row">風扇耗用功率</th><td id="power-value"></td></tr><tr><th scope="row">輪胎縱向抓地上限 μN</th><td id="grip-value"></td></tr></tbody></table>
+<p id="wing-explanation" class="notice"></p><div class="inline-formula">F被動 = q × S × C下壓<br>F風扇 = 壓差 × 有效作用面積<br>F總下壓 = F車身 + F尾翼 + F風扇</div><p>下壓力增加抓地上限，但不等於推進力。低速可在輪胎受限時幫助加速；高速受功率限制時，風扇耗電、滾阻與尾翼阻力也會帶來代價。風扇耗電已從本模型的驅動功率預算扣除。</p></article>
+</div>
+<div class="reason-grid">
+<article class="reason"><span>TRY / 01</span><h3>車速設為 0</h3><p>車身與尾翼的被動空力歸零。只要風扇開啟且有密封壓差，車底仍有吸力與抽氣流動。</p></article>
+<article class="reason"><span>TRY / 02</span><h3>固定「密封」，把車速加倍</h3><p>同角度、同模式下，被動下壓力與風阻依 v² 增為四倍。固定風扇轉速時，抽吸部分由壓力—流量曲線決定。</p></article>
+<article class="reason"><span>TRY / 03</span><h3>開啟冷氣體推進器</h3><p>四個後噴口以獨立白煙呈現，與彩色氣流分開。<span class="notice">假設噴嘴水平排氣，因此增加前進推力、不直接增加下壓力。</span><span class="notice">白煙濃淡、擴散與播放速度僅為視覺示意，不能據此判斷推力或氣體濃度；未求解凝結、可壓縮流或震波。</span></p></article>
+</div>
+<p class="reference-note notice">外觀比對：使用者提供的錄影在「High-Downforce Mode」呈現前輪後方側板向外展開。本頁新增收合／展開示意，位置依畫面重建，尺寸、鉸鏈與展開幅度為估計；尚未求解導板局部流場或受力，也不將它當作加速噴嘴。車門內收不等於輪胎突出於輪拱，輪距與車寬仍待尺寸資料校準。</p>
+<details class="audit-details" open><summary>粒子怎麼算？哪些地方是近似？</summary><p><span class="notice">車身繞流使用預設的平滑路徑與「流管截面」近似；</span>依 <strong>Q = uA</strong> 算局部速度，再按 <strong>ds/dt = u</strong> 推進粒子，顏色使用同一速度。風扇路徑則由模型抽氣流量與假設通道截面決定速度。彩色粒子以 0.08 倍慢動作呈現，播放倍率只改變觀看速度。<span class="notice">粒子數量是觀看設定，疏密不代表空氣密度或壓力；白煙使用獨立的視覺動畫，不套用速度色階。</span></p><p><span class="notice">每條流管的流量在此近似中守恆，但它們不是完整、連續的三維 CFD 解。路徑、流管截面、尾流擴散與風扇位置均為示意；未計算邊界層、渦流、湍流、風扇旋轉流場及噴嘴可壓縮流。下壓力由下方集總公式估算，並非把粒子流場的表面壓力積分而得。綠色光區表示平均低壓，並非壓力分布量測。</span></p></details>
+<details class="audit-details"><summary>公開假設與完整計算式</summary>
+<table class="assumption-table"><thead><tr><th>參數</th><th>本頁採用</th><th>來源層級</th></tr></thead><tbody>
+<tr><td>空氣／重力</td><td>ρ = 1.225 kg/m³；g = 9.80665 m/s²</td><td>標準環境近似</td></tr>
+<tr><td>車重／車身面積／尾翼面積</td><td>2000 kg／2.0 m²／0.8 m²</td><td>教學假設，非原廠尺寸</td></tr>
+<tr><td>車底有效吸力面積</td><td>3.0 m²</td><td>教學假設</td></tr>
+<tr><td>額定風扇曲線</td><td>堵流壓差 6000 Pa；自由流量 10 m³/s；效率 65%</td><td>假設的總系統曲線，不代表實車風扇</td></tr>
+<tr><td>等效漏氣／開口面積</td><td>密封 0.055 m²；開放 0.36 m²；孔口係數 0.65</td><td>教學假設；自動模式 140–200 km/h 漸開</td></tr>
+<tr><td>車身下壓／阻力係數</td><td>C下壓 = 0.25 + 0.35b；C阻力 = 0.25 + 0.06b</td><td>b 為通道開度 0–1；係數為假設</td></tr>
+<tr><td>尾翼係數</td><td>C下壓 = 1.45 sin[π min(α,22)/(2×22)] exp[−max(α−22,0)/25]<br>C阻力 = 0.025 + 0.12 C下壓² + 0.014 max(α−22,0)</td><td>α 以度計；22° 失速轉折是教學設定，非實車翼型</td></tr>
+<tr><td>驅動與輪胎</td><td>總功率預算 450 kW、傳動效率 92%、最大輪上力 30 kN、μ = 1.1、滾阻係數 0.014</td><td>教學假設，非 Roadster 動力規格</td></tr>
+<tr><td>冷氣體噴嘴</td><td>總質量流率 10 kg/s × 相對排氣速度 400 m/s = 4 kN；出口壓力等於環境</td><td>瞬時理想噴嘴假設。未模擬氣瓶耗盡、壓降或充氣；不可推算持續時間</td></tr>
+</tbody></table>
+<div class="inline-formula">n = 轉速比例；Δp₀ = 6000n²；Q₀ = 10n<br>風扇：Δp = Δp₀[1 − (Q/Q₀)²]<br>開口：Q = 0.65 A開口 √(2Δp/ρ)<br>兩式聯立求 Δp 與 Q；P風扇 = ΔpQ / 0.65<br>N = mg + F總下壓；輪胎驅動力 = min(30kN×輸出比例, P可用×輸出比例/v, μN)<br>P可用 = (450kW − P風扇) × 0.92；v = 0 時以最大輪上力限制，避免除以零<br>滾阻 = 0.014N；靜止且推力不足時只抵消推力，不讓車無故倒退</div>
+<p><span class="notice">風扇模型假設均勻平均壓差、準穩態與對環境壓力的等效開口；未耦合來流動壓、底板局部壓力、冷卻流與風扇排氣水平反作用力。氣動力與驅動力只是當下工況估算，沒有積分加速歷程，也不以官方展示成績反推係數。</span></p></details>
+<details class="audit-details" open><summary>官方展示、工程原理與本頁假設</summary><div class="source-list">
+<div class="source-item"><b>官方畫面：展示讀值</b><p><a href="https://www.youtube.com/watch?v=qt5p-_tE8d0&t=409s" target="_blank" rel="noopener">發表會 6:49</a> 顯示 DOWNFORCE 4697 KG。<span class="notice">單一時刻且缺測量條件，本頁沒有拿它設定固定吸力。</span></p></div>
+<div class="source-item"><b>官方機制：多模式吸力與尾翼</b><p><a href="https://x.com/Tesla/status/2110907039493038577" target="_blank" rel="noopener">官方 X 說明</a>提到風扇與地面密封；<a href="https://www.youtube.com/watch?v=qt5p-_tE8d0&t=925s" target="_blank" rel="noopener">15:25 起的自動字幕</a>說明高速通道開啟與可變角度尾翼。<span class="notice">切換速度、開度與係數由本頁假設。</span></p></div>
+<div class="source-item"><b>原理：動壓、受力與噴嘴反作用</b><p>公式依據 <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/" target="_blank" rel="noopener">NASA 升力方程</a>與 <a href="https://www.grc.nasa.gov/WWW/k-12/BGP/thrsteq.html" target="_blank" rel="noopener">NASA 推力方程</a>；<span class="notice">公式正確不代表本頁假設係數是實車數據。</span></p></div>
+<div class="source-item"><b><span class="notice">尚未取得：工程輸入與驗證資料</span></b><p><span class="notice">缺精確車底幾何、實車風扇曲線、尾翼係數、噴嘴時序與風洞量測。600 L 等自動字幕資訊、未確認的 80 kN，以及官方 0.81 秒成績均未用於校準本模型。</span></p></div>
+</div></details><footer class="detail-footer"><span><span class="notice">獨立物理教學展示 · 非 Tesla 官方模擬</span> · 資料查核：2026-10-16<br><span class="notice">實車尺寸、工況與驗證資料未取得，不作性能預測。</span></span><a href="#app">回到風洞 ↑</a></footer>
+</section>
+<dialog id="about"><h2>看見氣流，也看見假設。</h2><p class="notice">車型為模擬示意，外觀與規格以官方公布為準。</p><p>本頁以官方展示與使用者提供的截圖作為機構、外觀參考，使用簡化物理模型解說受力。<span class="notice">數值、車底結構與流線均不是實車 CFD 結果。</span></p><div class="formula">被動空力：½ρv²SC<br>風扇吸力：Δp × 有效面積<br>瞬時加速度：(驅動力 + 噴嘴推力 − 阻力) / 質量</div><p>粒子依流管近似的局部速度前進與著色；播放倍率只影響動畫。<span class="notice">車速滑桿設定比較工況，不是動力模擬的油門。</span><span class="notice">下壓力使用 kgf（公斤力），不是車輛質量。</span></p><p>風扇與推進器開關會改變受力；圖層開關只改顯示。尾翼與車底模式各自控制。拖曳旋轉、滾輪或雙指縮放；車底鏡頭會開啟 X 光並隱藏地板。暫停凍結動畫，參數仍可調整。</p><p>完整假設、公式與原始資料連結見頁面下方「計算與解說」。本頁仍為單一 HTML，需連網載入 Three.js CDN。</p><form method="dialog"><button>關閉</button></form></dialog>
+<script>
+// Show a useful message even if the CDN or module loader cannot start.
+window.aeroReady=false;
+window.aeroLoadTimer=setTimeout(()=>{if(!window.aeroReady){document.getElementById('load-message').textContent='3D 載入尚未完成。請確認網路可存取 cdn.jsdelivr.net，並使用支援 WebGL 的新版瀏覽器。';}},15000);
+</script>
+<script type="module">
+const $=id=>document.getElementById(id);
+try {
+const THREE=await import('three');
+const {OrbitControls}=await import('three/addons/controls/OrbitControls.js');
+const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
+const host=$('scene'),mobile=()=>window.innerWidth<=700;
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.setClearColor(0x0a0d10,0);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.98;host.appendChild(renderer.domElement);
+renderer.domElement.setAttribute('aria-label','3D 風洞場景：拖曳旋轉，滾輪或雙指縮放');
+const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x0a0d10,.045);
+const camera=new THREE.PerspectiveCamera(34,1,.05,80);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.enablePan=false;controls.minDistance=4.5;controls.maxDistance=15;controls.maxPolarAngle=Math.PI-.1;controls.target.set(0,.7,0);
+const pmrem=new THREE.PMREMGenerator(renderer),room=new RoomEnvironment(),env=pmrem.fromScene(room,.04);scene.environment=env.texture;room.dispose();pmrem.dispose();
+scene.add(new THREE.HemisphereLight(0xb8d7ee,0x22292c,2.1));
+function area(color,power,x,y,z,w,h){const l=new THREE.RectAreaLight(color,power,w,h);l.position.set(x,y,z);l.lookAt(0,.5,0);scene.add(l);return l;}
+area(0xe8f4ff,5,-1,5,1,7,3);area(0x8db3d6,4,2,2,-4,5,2);area(0xffffff,3,-4,1.5,3,3,2);
+const key=new THREE.DirectionalLight(0xf3f9ff,3.4);key.position.set(-3,6,4);key.castShadow=true;key.shadow.mapSize.set(2048,2048);Object.assign(key.shadow.camera,{left:-5,right:5,top:4,bottom:-4,near:.1,far:20});key.shadow.normalBias=.025;key.shadow.bias=-.0002;scene.add(key);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x070b0f,roughness:.42,metalness:.5,envMapIntensity:.25}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;floor.position.y=-.018;scene.add(floor);
+const grid=new THREE.GridHelper(28,56,0x33414a,0x27343d);grid.position.y=-.012;grid.material.transparent=true;grid.material.opacity=.17;scene.add(grid);
+const car=new THREE.Group();scene.add(car);
+const white=new THREE.MeshPhysicalMaterial({color:0xf5f7f8,metalness:.36,roughness:.23,clearcoat:1,clearcoatRoughness:.12,side:THREE.DoubleSide});
+const glass=new THREE.MeshPhysicalMaterial({color:0x070f14,metalness:.15,roughness:.20,envMapIntensity:.36,clearcoat:1,side:THREE.DoubleSide});
+const carbon=new THREE.MeshStandardMaterial({color:0x11191e,metalness:.55,roughness:.4,side:THREE.DoubleSide});
+const rubber=new THREE.MeshStandardMaterial({color:0x111316,roughness:.83});
+const metal=new THREE.MeshStandardMaterial({color:0x788c98,metalness:1,roughness:.24});
+const led=new THREE.MeshBasicMaterial({color:0xb9e6ff});const red=new THREE.MeshBasicMaterial({color:0xff354b});
+const teal=new THREE.MeshBasicMaterial({color:0x51e0d0});
+const shells=[],fans=[],arrows=[];
+function mesh(geo,mat,parent=car){const m=new THREE.Mesh(geo,mat);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+function box(w,h,d,x,y,z,mat,parent=car){const m=mesh(new THREE.BoxGeometry(w,h,d),mat,parent);m.position.set(x,y,z);return m;}
+function line(points,color=0x4d5c65,opacity=.6,parent=car){const g=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p)));const l=new THREE.Line(g,new THREE.LineBasicMaterial({color,transparent:true,opacity}));parent.add(l);return l;}
+function surface(vertices,indices,mat,parent=car){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.setIndex(indices);g.computeVertexNormals();return mesh(g,mat,parent);}
+// Rebuilt from the supplied launch screenshots: low wedge, fastback glass,
+// broad white rear shoulders, flush lifting tail panel and four rear nozzles.
+// Smooth station loft: continuous normals from undercut side through shoulders
+// and bonnet. Proportions are estimated visually, not manufacturer dimensions.
+const sections=[[-2.4,.83,.565],[-2.15,.965,.695],[-1.52,1.015,.81],[-.95,.985,.76],[-.45,.965,.735],[.2,.98,.755],[.88,1.055,.855],[1.45,1.075,.90],[2.02,1.035,.91],[2.4,1.0,.92]];
+let verts=[],idx=[];
+function sampleStation(table,x,k){
+let i=0;while(i<table.length-2&&x>table[i+1][0])i++;
+const a=table[i],b=table[i+1],before=table[Math.max(0,i-1)],after=table[Math.min(table.length-1,i+2)],d=b[0]-a[0],t=THREE.MathUtils.clamp((x-a[0])/d,0,1);
+const m0=(b[k]-before[k])/(b[0]-before[0]),m1=(after[k]-a[k])/(after[0]-a[0]);
+return (2*t*t*t-3*t*t+1)*a[k]+(t*t*t-2*t*t+t)*d*m0+(-2*t*t*t+3*t*t)*b[k]+(t*t*t-t*t)*d*m1;
+}
+function interp(x,k){return sampleStation(sections,x,k);}
+function fender(x){return .12*Math.exp(-Math.pow((x+1.47)/.46,2))+.065*Math.exp(-Math.pow((x-1.45)/.53,2));}
+function archBottom(x){let y=.265;for(const wx of [-1.47,1.45])if(Math.abs(x-wx)<.438)y=Math.max(y,.4085+Math.sqrt(.438**2-(x-wx)**2));return y;}
+function shoulderHeight(x){return Math.max(interp(x,2)+fender(x)-.025,archBottom(x)+.018);}
+function topY(x,t){return shoulderHeight(x)+(.055-.6*fender(x))*(1-t*t)+.012*Math.exp(-Math.pow((Math.abs(t)-.80)/.12,2));}
+function sidePoint(x,r,s){const top=shoulderHeight(x),bottom=archBottom(x);return [x,THREE.MathUtils.lerp(top,bottom,r),s*(interp(x,1)-.070*r*r+.014*Math.sin(Math.PI*r)-.018*Math.sin(Math.PI*r)*Math.exp(-Math.pow(x/.85,4)))];}
+const rings=192,sideSegments=12,topSegments=40,ringSize=sideSegments*2+topSegments+1;
+for(let i=0;i<=rings;i++){
+const x=-2.4+i/rings*4.8,w=interp(x,1);
+for(let j=0;j<=sideSegments;j++)verts.push(...sidePoint(x,1-j/sideSegments,-1));
+for(let j=1;j<=topSegments;j++){const t=j/topSegments*2-1;verts.push(x,topY(x,t),w*t);}
+for(let j=1;j<=sideSegments;j++)verts.push(...sidePoint(x,j/sideSegments,1));
+if(i)for(let j=0;j<ringSize-1;j++){const a=(i-1)*ringSize+j,b=i*ringSize+j;idx.push(a,b,a+1,b,b+1,a+1);}
+}
+shells.push(surface(verts,idx,white));
+for(const s of [-1,1]){
+box(1.94,.075,.065,-.02,.255,s*.945,carbon);
+const seam=[];
+for(let j=0;j<=16;j++){const u=j/16;seam.push(sidePoint(-.92+.12*u,.07+.86*u,s));}
+for(let j=1;j<=25;j++){const x=-.80+j/25*1.43;seam.push(sidePoint(x,.93,s));}
+for(let j=1;j<=16;j++){const u=j/16;seam.push(sidePoint(.63+.16*u,.93-.9*u,s));}
+line(seam,0x61717b,.28);
+box(.16,.012,.010,.43,.794,s*1.0,metal);
+const mirror=mesh(new THREE.SphereGeometry(1,24,12),carbon);mirror.scale.set(.12,.035,.062);mirror.position.set(-.76,.90,s*1.06);mirror.rotation.y=-s*.15;
+box(.08,.022,.14,-.77,.878,s*.99,carbon);
+}
+// A single flowing fastback glazing surface, with a lower crown and a longer
+// transition into the rear deck. Dense stations eliminate the box-shaped roof.
+const cabinSections=[[-1.25,.755,.835],[-.88,.70,1.035],[-.50,.666,1.163],[-.10,.65,1.217],[.28,.635,1.198],[.77,.59,1.105],[1.35,.47,.995],[1.91,.34,.943]];
+function cabinPoint(x,t){const w=sampleStation(cabinSections,x,1),h=sampleStation(cabinSections,x,2);return [x,h+.027*(1-t*t),w*t];}
+verts=[];idx=[];
+for(let i=0;i<=150;i++){const x=-1.25+i/150*3.16;for(let j=0;j<=32;j++)verts.push(...cabinPoint(x,j/16-1));if(i)for(let j=0;j<32;j++){const a=(i-1)*33+j,b=i*33+j;idx.push(a,b,a+1,b,b+1,a+1);}}
+shells.push(surface(verts,idx,glass));
+for(const s of [-1,1]){
+// Curved side glass, terminating on a swept diagonal C-pillar.
+verts=[];idx=[];
+for(let i=0;i<=90;i++){
+const u=i/90,xt=-1.25+u*1.53,xb=-1.25+u*2.13,top=cabinPoint(xt,s),base=[xb,topY(xb,.88)+.006,interp(xb,1)*.88*s];
+for(let j=0;j<=12;j++){const v=j/12;verts.push(THREE.MathUtils.lerp(top[0],base[0],v),THREE.MathUtils.lerp(top[1],base[1],v),THREE.MathUtils.lerp(top[2],base[2],v)+s*.012*Math.sin(v*Math.PI));}
+if(i)for(let j=0;j<12;j++){const a=(i-1)*13+j,b=i*13+j;idx.push(a,b,a+1,b,b+1,a+1);}
+}
+shells.push(surface(verts,idx,glass));
+// Rear sail panel rolls into the rear haunch instead of a flat white triangle.
+verts=[];idx=[];
+for(let i=0;i<=100;i++){
+const u=i/100,xt=.28+u*1.63,xb=.88+u*1.11,top=cabinPoint(xt,s),base=[xb,topY(xb,.97)+.004,interp(xb,1)*.97*s];
+for(let j=0;j<=18;j++){const v=j/18;verts.push(THREE.MathUtils.lerp(top[0],base[0],v),THREE.MathUtils.lerp(top[1],base[1],v)+.026*Math.sin(Math.PI*v)*(1-u),THREE.MathUtils.lerp(top[2],base[2],v));}
+if(i)for(let j=0;j<18;j++){const a=(i-1)*19+j,b=i*19+j;idx.push(a,b,a+1,b,b+1,a+1);}
+}
+shells.push(surface(verts,idx,white));
+const rail=[];for(let j=0;j<=120;j++){const point=cabinPoint(-1.25+j/120*3.16,s);point[1]+=.002;rail.push(point);}line(rail,0xdce8ed,.50);
+const split=[];for(let j=0;j<=16;j++){const v=j/16,top=cabinPoint(-.10,s),base=[.17,topY(.17,.88)+.006,interp(.17,1)*.88*s];split.push([THREE.MathUtils.lerp(top[0],base[0],v),THREE.MathUtils.lerp(top[1],base[1],v),THREE.MathUtils.lerp(top[2],base[2],v)+s*.014*Math.sin(v*Math.PI)]);}line(split,0x121a1f,.6);
+const seat=box(.4,.30,.44,-.02,.76,s*.31,carbon);seat.rotation.z=.17;
+}
+// A thin rounded nose replaces the vertical slab front. Front detail remains
+// illustrative because the supplied references predominantly show the rear.
+verts=[];idx=[];
+for(let i=0;i<=10;i++){const v=i/10;for(let j=0;j<=48;j++){const t=j/24-1;verts.push(-2.415+.05*t*t-.012*Math.sin(v*Math.PI),THREE.MathUtils.lerp(.27,.565,v)+.026*(1-t*t)*v,t*(.80+.03*v));}if(i)for(let j=0;j<48;j++){const a=(i-1)*49+j,b=i*49+j;idx.push(a,b,a+1,b,b+1,a+1);}}
+shells.push(surface(verts,idx,white));
+box(.02,.078,1.50,-2.444,.405,0,carbon);
+box(.16,.020,1.79,-2.35,.263,0,carbon);
+for(const s of [-1,1]){
+const lamp=box(.018,.018,.57,-2.423,.558,s*.43,led);lamp.rotation.y=-s*.10;
+const crease=[];for(let j=0;j<=48;j++){const x=-2.12+j/48*1.02;crease.push([x,topY(x,.63)+.003,interp(x,1)*.63*s]);}line(crease,0x81949e,.20);
+}
+
+// Recessed full-width rear light band, faceted white bumper and deep diffuser.
+box(.09,.15,1.99,2.405,.79,0,carbon);
+box(.018,.021,1.94,2.458,.775,0,red);
+verts=[];idx=[];
+for(let i=0;i<=10;i++){const v=i/10;for(let j=0;j<=40;j++){const t=j/20-1;verts.push(2.44+.033*(1-t*t)+.018*Math.sin(Math.PI*v),.705-v*.19+.018*(1-t*t),t*(.97-.16*v));}if(i)for(let j=0;j<40;j++){const a=(i-1)*41+j,b=i*41+j;idx.push(a,b,a+1,b,b+1,a+1);}}
+shells.push(surface(verts,idx,white));
+box(.035,.20,.32,2.489,.59,0,metal);
+// Small raised lettering on a plain rear plate, generated locally.
+const plateCanvas=document.createElement('canvas');plateCanvas.width=256;plateCanvas.height=128;
+const plateCtx=plateCanvas.getContext('2d');plateCtx.fillStyle='#bcc5c9';plateCtx.fillRect(0,0,256,128);plateCtx.fillStyle='#eef1f2';plateCtx.font='28px monospace';plateCtx.textAlign='center';plateCtx.fillText('RDSTR',128,76);
+const plateTex=new THREE.CanvasTexture(plateCanvas);plateTex.colorSpace=THREE.SRGBColorSpace;
+const plate=mesh(new THREE.PlaneGeometry(.30,.15),new THREE.MeshBasicMaterial({map:plateTex}));plate.rotation.y=Math.PI/2;plate.position.set(2.511,.595,0);
+box(.35,.255,1.96,2.28,.32,0,carbon);
+for(let i=-3;i<=3;i++){const fin=box(.66,.20,.018,2.15,.215,i*.275,carbon);fin.rotation.z=.12;}
+for(const s of [-1,1]){
+surface([1.68,.26,s*1.03,2.49,.24,s*1.02,2.49,.58,s*1.0,2.08,.56,s*1.04],[0,1,2,0,2,3],carbon);
+box(.30,.018,.025,2.08,.59,s*1.04,red);
+}
+// Four separate circular rear ports observed in the screenshots. Their internal
+// plumbing and thrust are intentionally not asserted from exterior imagery.
+const nozzleMat=new THREE.MeshStandardMaterial({color:0x928b7e,metalness:.92,roughness:.28});
+const nozzleBlack=new THREE.MeshStandardMaterial({color:0x05080a,metalness:.3,roughness:.7});
+const jets=new THREE.Group();scene.add(jets);
+box(.035,.23,1.86,2.44,.36,0,carbon);
+for(const z of [-.66,-.22,.22,.66]){
+const tube=mesh(new THREE.CylinderGeometry(.079,.073,.09,40,1,true),nozzleMat);tube.rotation.z=Math.PI/2;tube.position.set(2.40,.365,z);
+const rim=mesh(new THREE.TorusGeometry(.079,.007,10,40),nozzleMat);rim.rotation.y=Math.PI/2;rim.position.set(2.462,.365,z);
+const dark=mesh(new THREE.CircleGeometry(.072,40),nozzleBlack);dark.rotation.y=Math.PI/2;dark.position.set(2.460,.365,z);
+}
+const undertray=box(3.75,.045,1.64,.05,.275,0,carbon);
+// Five broad swept aero blades, matching the silver/black wheel character.
+const rimWhite=new THREE.MeshStandardMaterial({color:0xd5dfe5,metalness:.86,roughness:.22,side:THREE.DoubleSide});
+for(const x of [-1.47,1.45])for(const s of [-1,1]){
+const wheel=new THREE.Group();wheel.position.set(x,.4085,s*.984);wheel.scale.setScalar(.95);car.add(wheel);
+const tire=mesh(new THREE.LatheGeometry([[.30,-.125],[.37,-.127],[.405,-.108],[.425,-.065],[.429,0],[.425,.065],[.405,.108],[.37,.127],[.30,.125]].map(p=>new THREE.Vector2(...p)),64),rubber,wheel);tire.rotation.x=Math.PI/2;
+const inner=mesh(new THREE.CylinderGeometry(.334,.334,.25,48),carbon,wheel);inner.rotation.x=Math.PI/2;
+const ring=mesh(new THREE.TorusGeometry(.335,.014,10,64),rimWhite,wheel);ring.position.z=s*.133;
+const disc=mesh(new THREE.CylinderGeometry(.25,.25,.016,48),metal,wheel);disc.rotation.x=Math.PI/2;disc.position.z=s*.087;
+for(let j=0;j<5;j++){
+const spoke=new THREE.Group();spoke.rotation.z=j/5*Math.PI*2;wheel.add(spoke);
+surface([-.035,.05,s*.146,.035,.05,s*.146,.18,.275,s*.146,.055,.326,s*.146,-.022,.15,s*.146],[0,1,4,1,2,3,1,3,4],rimWhite,spoke);
+line([[.02,.085,s*.153],[.145,.285,s*.153]],0x29343c,.9,spoke);
+}
+const hub=mesh(new THREE.CylinderGeometry(.066,.066,.03,24),metal,wheel);hub.rotation.x=Math.PI/2;hub.position.z=s*.15;
+for(const edge of [-1,1]){const seam=mesh(new THREE.TorusGeometry(.414,.004,4,64),new THREE.MeshStandardMaterial({color:0x343a3d,roughness:1}),wheel);seam.position.z=edge*.095;}
+}
+// The full-width white tail panel lifts out of the body. Its downturned ends
+// wrap around the rear corners when stowed; black underside appears when raised.
+const wing=new THREE.Group();wing.position.set(2.15,.96,0);car.add(wing);
+const wingBlade=box(.59,.033,2.06,0,0,0,white,wing);
+box(.57,.012,2.0,0,-.024,0,carbon,wing);
+for(const s of [-1,1]){
+surface([-.295,.016,s*1.03,.295,.016,s*1.03,.32,-.19,s*1.03,-.22,-.14,s*1.03],[0,1,2,0,2,3],white,wing);
+line([[-.28,.019,s*1.034],[.29,.019,s*1.034]],0xf7fbff,.8,wing);
+}
+const wingLinks=[];
+function strut(a,b,r,material,parent=car){const m=mesh(new THREE.CylinderGeometry(r,r,1,10),material,parent);wingLinks.push({mesh:m,base:new THREE.Vector3(...a),top:new THREE.Vector3(...b)});return m;}
+for(const s of [-1,1]){
+strut([1.83,.91,s*.65],[-.20,-.03,s*.65],.018,carbon);
+strut([2.20,.91,s*.65],[.18,-.03,s*.65],.014,metal);
+}
+function updateWing(){
+const deploy=THREE.MathUtils.smoothstep(state.angle,0,35);
+wing.position.y=.96+deploy*.27;wing.rotation.z=THREE.MathUtils.degToRad(state.angle);
+wing.updateMatrixWorld(true);
+for(const link of wingLinks){const tip=wing.localToWorld(link.top.clone()),delta=tip.clone().sub(link.base);link.mesh.position.copy(link.base).add(tip).multiplyScalar(.5);link.mesh.scale.set(1,Math.max(delta.length(),.006),1);link.mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());link.mesh.visible=state.angle>1;}
+}
+
+// Twin underfloor suction fans with a visible shroud and spinning impellers.
+const suctionGroup=new THREE.Group();car.add(suctionGroup);
+const fanMat=new THREE.MeshStandardMaterial({color:0x6de8d1,metalness:.65,roughness:.24,emissive:0x12645a,emissiveIntensity:.5});
+for(const x of [.15,1.05]){
+const ring=mesh(new THREE.TorusGeometry(.35,.045,12,48),metal,suctionGroup);ring.rotation.x=Math.PI/2;ring.position.set(x,.235,0);
+const rotor=new THREE.Group();rotor.position.set(x,.235,0);suctionGroup.add(rotor);fans.push(rotor);
+const hub=mesh(new THREE.SphereGeometry(.095,20,12),fanMat,rotor);hub.scale.y=.4;
+for(let j=0;j<9;j++){const blade=box(.25,.025,.09,0,0,.18,fanMat,new THREE.Group());const pivot=new THREE.Group();pivot.rotation.y=j/9*Math.PI*2;blade.parent.remove(blade);pivot.add(blade);blade.rotation.y=.4;rotor.add(pivot);}
+for(let j=0;j<5;j++){const l=line([[x-.32,.19,(j-2)*.12],[x+.32,.19,(j-2)*.12]],0x607e87,.5,suctionGroup);}
+}
+const pressureMaterial=new THREE.MeshBasicMaterial({color:0x23d6c4,transparent:true,opacity:.16,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending});
+const pressureField=mesh(new THREE.PlaneGeometry(3.25,1.6),pressureMaterial,suctionGroup);pressureField.rotation.x=-Math.PI/2;pressureField.position.set(.25,.16,0);
+const glow=new THREE.PointLight(0x27d6c0,4,3,2);glow.position.set(.4,.18,0);suctionGroup.add(glow);
+for(const x of [-1,.1,1.2])for(const s of [-1,1]){const a=new THREE.ArrowHelper(new THREE.Vector3(0,-1,0),new THREE.Vector3(x,1.7,s*1.18),.65,0xc7f369,.13,.065);suctionGroup.add(a);arrows.push(a);a.line.material.transparent=true;a.line.material.opacity=.65;}
+// PHYSICS_MODEL_START
+// All vehicle-specific constants below are teaching assumptions, not Tesla data.
+const MODEL = Object.freeze({rho:1.225,g:9.80665,mass:2000,bodyArea:2,wingArea:.8,
+  suctionArea:3,fanPressure0:6000,fanQ0:10,fanEfficiency:.65,
+  leakClosed:.055,leakOpen:.36,orificeCd:.65,
+  grossPower:450000,driveEfficiency:.92,maxWheelForce:30000,mu:1.1,crr:.014,
+  jetMassFlow:10,jetExitSpeed:400,visualTimeScale:.08});
+function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+function smooth(a,b,x){const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);}
+function physics(s){
+  const v=Math.max(0,s.speed)/3.6,q=.5*MODEL.rho*v*v;
+  const opening=s.fanMode==='sealed'?0:s.fanMode==='open'?1:smooth(140,200,s.speed);
+  const n=s.suction?clamp(s.fanLevel/100,0,1):0;
+  const leakArea=MODEL.leakClosed+(MODEL.leakOpen-MODEL.leakClosed)*opening;
+  const shutoff=MODEL.fanPressure0*n*n,freeFlow=MODEL.fanQ0*n;
+  // Intersection of fan curve dp = dp0*(1-(Q/Q0)^2) and an orifice loss.
+  const conductance=2*(MODEL.orificeCd*leakArea)**2/MODEL.rho;
+  const dp=n>0?shutoff/(1+shutoff*conductance/(freeFlow*freeFlow)):0;
+  const fanQ=Math.sqrt(conductance*dp),fanPower=dp*fanQ/MODEL.fanEfficiency;
+  const fanForce=dp*MODEL.suctionArea;
+  const angle=clamp(s.angle,0,35),stall=angle>22;
+  const wingCL=1.45*Math.sin(Math.min(angle,22)/22*Math.PI/2)*Math.exp(-Math.max(0,angle-22)/25);
+  const bodyCL=.25+.35*opening,bodyCD=.25+.06*opening;
+  const wingCD=.025+.12*wingCL*wingCL+.014*Math.max(0,angle-22);
+  const bodyForce=q*MODEL.bodyArea*bodyCL,wingForce=q*MODEL.wingArea*wingCL;
+  const passive=bodyForce+wingForce,total=passive+fanForce;
+  const drag=q*(MODEL.bodyArea*bodyCD+MODEL.wingArea*wingCD);
+  const normal=MODEL.mass*MODEL.g+total,grip=MODEL.mu*normal;
+  const throttle=clamp(s.throttle/100,0,1);
+  const availablePower=Math.max(0,MODEL.grossPower-fanPower)*MODEL.driveEfficiency;
+  const requestedDrive=Math.min(MODEL.maxWheelForce*throttle,availablePower*throttle/Math.max(v,.1));
+  const drive=Math.min(requestedDrive,grip);
+  // Instantaneous ideal pressure-matched jet: no ambient-air inlet, pe = pa.
+  const jet=s.jets?MODEL.jetMassFlow*MODEL.jetExitSpeed:0;
+  const rolling=v>0?MODEL.crr*normal:Math.min(drive+jet,MODEL.crr*normal);
+  const resistance=drag+rolling,net=drive+jet-resistance,accel=net/MODEL.mass;
+  return {v,q,opening,n,leakArea,dp,fanQ,fanPower,fanForce,wingCL,bodyCL,wingCD,bodyCD,
+    bodyForce,wingForce,passive,total,drag,normal,grip,drive,jet,rolling,resistance,net,accel,stall,availablePower};
+}
+// PHYSICS_MODEL_END
+
+// Four white plumes, separate from the velocity-coloured airflow.
+// Appearance/timing only: this does not solve compressible flow or condensation.
+const smokeLife=1.15,smokeCount=4*72;
+const smokeGeometry=new THREE.InstancedBufferGeometry();
+smokeGeometry.setAttribute('position',new THREE.Float32BufferAttribute([-.5,-.5,0,.5,-.5,0,.5,.5,0,-.5,.5,0],3));
+smokeGeometry.setAttribute('uv',new THREE.Float32BufferAttribute([0,0,1,0,1,1,0,1],2));
+smokeGeometry.setIndex([0,1,2,0,2,3]);
+const smokeSeed=new Float32Array(smokeCount*4);
+for(let i=0;i<smokeCount;i++)smokeSeed.set([[-.66,-.22,.22,.66][Math.floor(i/72)],(i%72)/72,(i*.754877666)%1,(i*.569840296)%1],i*4);
+smokeGeometry.setAttribute('puff',new THREE.InstancedBufferAttribute(smokeSeed,4));
+smokeGeometry.instanceCount=smokeCount;
+const smokeMaterial=new THREE.ShaderMaterial({
+  transparent:true,depthWrite:false,depthTest:true,toneMapped:false,
+  uniforms:{clock:{value:0},elapsed:{value:0},life:{value:smokeLife}},
+  vertexShader:`
+    attribute vec4 puff;
+    uniform float clock,elapsed,life;
+    varying vec2 vUv;
+    varying float vFade,vSeed;
+    void main(){
+      float t=fract(clock/life+puff.y),age=t*life;
+      float theta=puff.z*6.2831853;
+      float spread=.012+.105*t+.12*t*t;
+      float distance=2.8*(1.35*t-.35*t*t);
+      vec3 center=vec3(2.49+distance,
+        .365+(.035*t+.12*t*t)+sin(theta+4.*t)*spread*.55,
+        puff.x+cos(theta+3.*t)*spread);
+      float size=.115+.62*pow(t,1.12);
+      vec4 viewCenter=modelViewMatrix*vec4(center,1.);
+      float angle=theta+clock*(puff.w-.5)*.8;
+      mat2 spin=mat2(cos(angle),-sin(angle),sin(angle),cos(angle));
+      viewCenter.xy+=spin*position.xy*size;
+      gl_Position=projectionMatrix*viewCenter;
+      vUv=uv;vSeed=puff.z*19.;
+      vFade=step(age,elapsed)*smoothstep(0.,.018,t)*pow(1.-t,1.25)*.38;
+    }`,
+  fragmentShader:`
+    varying vec2 vUv;
+    varying float vFade,vSeed;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
+    void main(){
+      vec2 p=vUv*2.-1.;
+      float r=length(p);
+      float n=.60*noise(vUv*5.+vSeed)+.28*noise(vUv*11.+vSeed)+.12*noise(vUv*22.);
+      float edge=1.-smoothstep(.35,1.,r+(n-.5)*.24);
+      float alpha=edge*(.45+.55*n)*vFade;
+      if(alpha<.003)discard;
+      gl_FragColor=vec4(vec3(.82+.18*n),alpha);
+    }`
+});
+const smoke=new THREE.Mesh(smokeGeometry,smokeMaterial);smoke.frustumCulled=false;smoke.renderOrder=4;jets.add(smoke);
+let smokeEnabled=false,smokeClock=0,smokeElapsed=0;
+function syncSmoke(){
+  if(state.jets&&!smokeEnabled){
+    // A representative still plume remains visible when enabled while paused.
+    smokeClock=0;smokeElapsed=state.paused?smokeLife:0;
+  }
+  smokeEnabled=state.jets;jets.visible=state.jets;
+  updateSmoke(0);
+}
+function updateSmoke(dt){
+  if(!state.jets)return;
+  smokeClock+=dt*state.rate;smokeElapsed=Math.min(smokeLife,smokeElapsed+dt*state.rate);
+  smokeMaterial.uniforms.clock.value=smokeClock;
+  smokeMaterial.uniforms.elapsed.value=smokeElapsed;
+}
+
+// Front-wheel trailing panels observed in the supplied High-Downforce Mode clip.
+// Hinge, travel and dimensions are estimated; no aerodynamic coefficient is inferred.
+const sideGuides=[];
+for(const sign of [-1,1]){
+  const hinge=new THREE.Group();hinge.position.set(-1.13,0,sign*.989);car.add(hinge);
+  const outline=[];
+  for(let i=0;i<=12;i++){
+    const y=.295+i/12*.455;
+    const x=-1.47+Math.sqrt(Math.max(0,.449**2-(y-.4085)**2));
+    const r=clamp((shoulderHeight(x)-y)/(shoulderHeight(x)-archBottom(x)),0,1);
+    outline.push([x,y,sign*(Math.abs(sidePoint(x,r,sign)[2])+.009)]);
+  }
+  outline.push([-.62,.744,sign*.975],[-.61,.295,sign*.920]);
+  const local=outline.map(v=>[v[0]-hinge.position.x,v[1],v[2]-hinge.position.z]);
+  const faces=[];for(let i=1;i<local.length-1;i++)faces.push(0,i,i+1);
+  surface(local.flat(),faces,white,hinge);
+  line([...local,local[0]],0x7e8c94,.38,hinge);
+  const cavity=surface(outline.map(v=>[v[0],v[1],v[2]-sign*.003]).flat(),faces,carbon);
+  box(.13,.016,.008,-.72,.764,sign*.978,metal);
+  sideGuides.push({hinge,cavity,sign});
+}
+function updateSideGuides(){
+  for(const guide of sideGuides){
+    guide.hinge.rotation.y=state.sideGuides?-guide.sign*.40:0;
+    guide.cavity.visible=state.sideGuides;
+  }
+}
+
+const defaults={speed:160,angle:18,fanLevel:80,fanMode:'auto',throttle:70,rate:1,flow:true,suction:true,xray:false,wingflow:true,jets:false,sideGuides:false};
+const state={...defaults,paused:matchMedia('(prefers-reduced-motion: reduce)').matches,view:'rear'};
+let model=physics(state),last=performance.now(),cameraGoal=null;
+const flowGroup=new THREE.Group(),wingGroup=new THREE.Group();scene.add(flowGroup,wingGroup);
+// Assumed seals and ducts: all dimensions/layouts are pedagogical, not observed internals.
+const seals=new THREE.Group();car.add(seals);
+const sealPanels=[];
+for(const x of [-1.65,1.65])sealPanels.push(box(.025,.17,1.6,x,.17,0,carbon,seals));
+for(const z of [-.81,.81])box(3.3,.16,.025,0,.18,z,carbon,seals);
+const ducts=new THREE.Group();car.add(ducts);
+for(const [i,x] of [.15,1.05].entries()){
+  const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(x,.24,0),new THREE.Vector3(x+.2,.40,(i?1:-1)*.30),new THREE.Vector3(1.85,.42,(i?1:-1)*.64),new THREE.Vector3(2.46,.47,(i?1:-1)*.72)]);
+  mesh(new THREE.TubeGeometry(curve,28,.085,10,false),new THREE.MeshBasicMaterial({color:0x49baad,wireframe:true,transparent:true,opacity:.14,depthWrite:false}),ducts);
+}
+const wingArrows=[];
+for(const z of [-.85,.85]){const a=new THREE.ArrowHelper(new THREE.Vector3(0,-1,0),new THREE.Vector3(2.15,2,z),.4,0xc7f369,.09,.045);scene.add(a);wingArrows.push(a);}
+const lanes=[],color=new THREE.Color(),p=new THREE.Vector3(),q=new THREE.Vector3();
+function speedColor(speed,target){return target.setHSL((1-clamp(speed/100,0,1))*.64,.92,.55);}
+$('speed-gradient').style.background='linear-gradient(90deg,'+Array.from({length:11},(_,i)=>speedColor(i*10,new THREE.Color()).getStyle()+' '+i*10+'%').join(',')+')';
+function makeLane(kind,seed,group,count=12){
+  const segments=128,positions=new Float32Array(count*6),colors=new Float32Array(count*6);
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3).setUsage(THREE.DynamicDrawUsage));geo.setAttribute('color',new THREE.BufferAttribute(colors,3).setUsage(THREE.DynamicDrawUsage));
+  const mat=new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:kind==='fan'?.85:.65,toneMapped:false,depthWrite:false,blending:THREE.AdditiveBlending});
+  const obj=new THREE.LineSegments(geo,mat);obj.frustumCulled=false;group.add(obj);
+  const traceGeo=new THREE.BufferGeometry();traceGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array((segments+1)*3),3));
+  const trace=new THREE.Line(traceGeo,new THREE.LineBasicMaterial({color:kind==='fan'?0x42b9bd:0x79a2bd,transparent:true,opacity:.065,depthWrite:false}));group.add(trace);
+  const lane={kind,seed,count,segments,obj,trace,geo,positions,colors,points:[],distance:new Float64Array(segments+1),travel:new Float64Array(segments+1),speeds:new Float64Array(segments+1),phase:seed.phase||0,duration:Infinity};lanes.push(lane);return lane;
+}
+for(let i=0;i<27;i++)makeLane('top',{y:.13+Math.floor(i/9)*.19,z:(i%9-4)*.27,phase:(i*.618)%1},flowGroup,11);
+for(let i=0;i<12;i++)makeLane('side',{y:.22+(i%6)*.16,z:(i<6?-1:1)*1.25,phase:(i*.723)%1},flowGroup,11);
+for(let i=0;i<7;i++)makeLane('under',{z:(i-3)*.17,phase:(i*.43)%1},flowGroup,9);
+for(let i=0;i<11;i++)makeLane('wing',{z:(i-5)*.17,y:.055+(i%3)*.045,phase:(i*.38)%1},wingGroup,10);
+for(let i=0;i<10;i++)makeLane('fan',{z:(i-4.5)*.16,phase:(i*.48)%1},suctionGroup,8);
+function route(lane,t,out){
+  const seed=lane.seed,x=-4.8+t*10,body=Math.exp(-Math.pow(x/1.9,4));
+  if(lane.kind==='top'){
+    const rise=smooth(-3.7,-1.95,x),fall=1-smooth(1.9,4.2,x),center=Math.exp(-Math.pow(seed.z/.92,8));
+    let y=seed.y+(.99+.35*Math.exp(-Math.pow((x+.1)/1.18,4))*center)*rise*fall;
+    const wingEnvelope=wing.position.y+.20+seed.y;
+    if(Math.abs(seed.z)<1.12)y=Math.max(y,wingEnvelope*Math.exp(-Math.pow((x-2.15)/.74,4)));
+    out.set(x,y,seed.z+Math.sign(seed.z)*.1*body);
+  }else if(lane.kind==='side')out.set(x,seed.y+.04*body,seed.z+Math.sign(seed.z)*.17*body);
+  else if(lane.kind==='under')out.set(x,.095+.045*Math.exp(-Math.pow(x/1.7,4)),seed.z);
+  else if(lane.kind==='wing'){
+    const xx=1.45+t*3.9,dx=xx-2.15,turn=Math.atan2(model.wingCL,2.5);
+    const wake=Math.max(0,xx-2.45),spread=(model.stall?.09:.025)*wake;
+    out.set(xx,wing.position.y+seed.y+.13+Math.sin(turn)*Math.max(0,dx)+spread*(.5+Math.abs(seed.z)),seed.z*(1+spread));
+  }else if(lane.kind==='fan'){
+    lane.curve.getPoint(t,out);
+  }
+  return out;
+}
+function localSpeed(lane,t,position){
+  const x=position.x,body=Math.exp(-Math.pow(x/1.8,4));
+  if(lane.kind==='top'||lane.kind==='side'){
+    // Each illustrative streamtube contracts over the body and widens in the wake.
+    const contraction=1+.37*body,expansion=1+.3*Math.exp(-Math.pow((x-3.2)/1.0,2));
+    const areaRatio=expansion/contraction;
+    return model.v/areaRatio;
+  }
+  if(lane.kind==='under')return model.v*model.opening*(1+.55*body);
+  if(lane.kind==='wing'){
+    const areaRatio=(1+(model.stall?.65:.18)*smooth(2.45,4.7,x))/(1+.35*model.wingCL*Math.exp(-Math.pow((x-2.15)/.5,2)));
+    return model.v/areaRatio;
+  }
+  if(lane.kind==='fan'){
+    const area=model.leakArea*(1-smooth(0,.3,t))+.25*smooth(0,.3,t)+.10*smooth(.75,1,t);
+    return model.fanQ/area;
+  }
+  return 0;
+}
+function rebuildLanes(){
+  for(const lane of lanes){
+    if(lane.kind==='fan'){
+      const z=lane.seed.z,sign=Math.sign(z)||1,open=model.opening;
+      lane.curve=new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-.9-1.8*open,.09,z+(1-open)*sign*.52),
+        new THREE.Vector3(-.7,.12,z*.70),new THREE.Vector3(z<0?.15:1.05,.22,z*.15),
+        new THREE.Vector3(1.40,.42,sign*.46),new THREE.Vector3(2.48,.47,sign*.72),new THREE.Vector3(3.1,.48,sign*.76)]);
+    }
+    lane.points=[];lane.distance[0]=0;lane.travel[0]=0;
+    const tracePos=lane.trace.geometry.attributes.position.array;
+    for(let i=0;i<=lane.segments;i++){
+      const t=i/lane.segments,point=route(lane,t,new THREE.Vector3());lane.points.push(point);tracePos.set(point.toArray(),i*3);lane.speeds[i]=localSpeed(lane,t,point);
+      if(i){const length=point.distanceTo(lane.points[i-1]);lane.distance[i]=lane.distance[i-1]+length;const mean=(lane.speeds[i-1]+lane.speeds[i])*.5;lane.travel[i]=mean>1e-8?lane.travel[i-1]+length/mean:Infinity;}
+    }
+    lane.duration=lane.travel[lane.segments];lane.trace.geometry.attributes.position.needsUpdate=true;lane.trace.geometry.computeBoundingSphere();
+    const running=Number.isFinite(lane.duration)&&lane.duration>0;
+    lane.obj.visible=running&&(lane.kind==='fan'?state.flow:true);
+    lane.trace.visible=running&&(lane.kind==='fan'?state.flow:true);
+  }
+}
+function travelSample(lane,travel,out){
+  const times=lane.travel;let lo=0,hi=lane.segments;
+  while(hi-lo>1){const mid=(lo+hi)>>1;if(times[mid]<=travel)lo=mid;else hi=mid;}
+  const f=clamp((travel-times[lo])/(times[hi]-times[lo]),0,1);out.copy(lane.points[lo]).lerp(lane.points[hi],f);
+  return lane.speeds[lo]+(lane.speeds[hi]-lane.speeds[lo])*f;
+}
+function paintParticles(dt=0){
+  for(const lane of lanes){
+    if(!Number.isFinite(lane.duration)||lane.duration<=0)continue;
+    lane.phase=(lane.phase+dt*state.rate*MODEL.visualTimeScale/lane.duration)%1;
+    for(let j=0;j<lane.count;j++){
+      const travel=((j/lane.count+lane.phase)%1)*lane.duration,u=travelSample(lane,travel,p);
+      travelSample(lane,Math.max(0,travel-.11/Math.max(u,.01)),q);
+      const k=j*6;lane.positions.set([p.x,p.y,p.z,q.x,q.y,q.z],k);
+      speedColor(u,color);
+      lane.colors.set([color.r,color.g,color.b,color.r*.26,color.g*.26,color.b*.26],k);
+    }
+    lane.geo.attributes.position.needsUpdate=true;lane.geo.attributes.color.needsUpdate=true;
+  }
+}
+const cameraViews={side:[0,1.05,8.7],front:[-6.7,2.8,6.6],under:[-2.4,-3.6,5.5],rear:[6.8,2.55,6.1]};
+function setView(view,instant=false){
+  state.view=view;const pos=new THREE.Vector3(...cameraViews[view]);if(mobile())pos.multiplyScalar(1.48);
+  if(instant)camera.position.copy(pos);else cameraGoal=pos;
+  controls.target.set(0,view==='under'?.35:.7,0);
+  if(view==='under'){$('xray').checked=true;state.xray=true;}
+  floor.visible=view!=='under';grid.visible=view!=='under';
+  document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
+  $('view-status').textContent=({front:'車頭 3/4',side:'正側面',under:'車底仰視',rear:'車尾'})[view]+' · 自由旋轉';sync();
+}
+const fmt=(x,d=0)=>x.toLocaleString('zh-TW',{minimumFractionDigits:d,maximumFractionDigits:d});
+function sync(){
+  model=physics(state);updateWing();updateSideGuides();syncSmoke();
+  flowGroup.visible=state.flow;wingGroup.visible=state.wingflow;
+  suctionGroup.visible=state.suction||state.xray;ducts.visible=state.xray;
+  for(const panel of sealPanels){panel.scale.y=1-.95*model.opening;panel.position.y=.255-.085*panel.scale.y;}
+  white.transparent=state.xray;white.opacity=state.xray?.14:1;white.depthWrite=!state.xray;white.needsUpdate=true;
+  glass.transparent=state.xray;glass.opacity=state.xray?.10:1;glass.depthWrite=!state.xray;glass.needsUpdate=true;
+  undertray.visible=!state.xray;car.traverse(o=>{if(o.isMesh)o.castShadow=!state.xray;});
+  pressureField.visible=model.dp>0;pressureMaterial.opacity=.04+.22*clamp(model.dp/6000,0,1);glow.intensity=5*clamp(model.dp/6000,0,1);
+  arrows.forEach(a=>{a.visible=model.fanForce>1;a.setLength(.12+.85*clamp(model.fanForce/18000,0,1),.10,.055);});
+  wingArrows.forEach(a=>{a.visible=state.wingflow&&model.wingForce>1;a.position.y=wing.position.y+.9;a.setLength(.12+.6*clamp(model.wingForce/5000,0,1),.09,.045);});
+  $('total').textContent=fmt(model.total/MODEL.g);$('aero').textContent=fmt(model.passive/MODEL.g);$('fan-force').textContent=fmt(model.fanForce/MODEL.g);
+  $('aero-breakdown').textContent=`車身 ${fmt(model.bodyForce/MODEL.g)} / 尾翼 ${fmt(model.wingForce/MODEL.g)} kgf`;
+  $('pressure').textContent=`平均表壓 ${model.dp>0?'−':''}${fmt(model.dp/1000,2)} kPa`;
+  for(const [id,unit] of [['speed','km/h'],['angle','°'],['fanLevel','%'],['rate','×']]){
+    $(id+'-out').innerHTML=fmt(state[id],id==='rate'?2:0)+` <small>${unit}</small>`;
+  }
+  $('throttle-out').textContent=state.throttle+'%';$('tag-angle').textContent=state.angle;
+  $('angle').setAttribute('aria-valuetext',state.angle+' 度，'+(state.angle===0?'尾翼收合':model.stall?'教學失速區':'尾翼升起'));
+  $('scene-tag').style.visibility=state.wingflow?'visible':'hidden';$('legend').classList.toggle('is-inactive',!state.flow&&!state.wingflow&&!state.jets);
+  $('jet-status').textContent=state.jets?'白煙：後噴嘴啟動':'白煙：後噴嘴關閉';
+  $('jet-status').classList.toggle('active',state.jets);
+  $('guide-state').textContent=state.sideGuides?'展開示意 · 未計入受力':'收合 · 可切換展開';
+  $('play').setAttribute('aria-pressed',String(state.paused));$('play').innerHTML=state.paused?'<b>▶</b><span>播放氣流</span>':'<b>Ⅱ</b><span>暫停氣流</span>';
+  $('status').textContent=state.paused?'氣流已暫停':model.v===0?(model.n>0?'靜止 · 抽氣中':'靜止工況'):'工況比較中';
+  $('status-dot').style.background=state.paused?'#7c8c97':'#c7f369';
+  const modeName=model.opening===0?'密封抽吸':model.opening===1?'開放通道':'通道漸開';
+  $('mode-badge').textContent=`${modeName} · 開度 ${fmt(model.opening*100)}%`;
+  $('flow-note').textContent=model.n===0?'風扇停用。氣流只隨來流與通道模式變化。':model.opening<.05?'風扇抽出車底空氣，形成平均低壓；靜止也能產生吸力。':'通道開放後抽氣流量增加、抽吸壓差降低；車底被動空力在本模型中增強。';
+  $('mode-explanation').textContent=`${modeName}，等效開口 ${fmt(model.leakArea,3)} m²。`+(model.n>0?`風扇轉速 ${state.fanLevel}%，由假設曲線與開口阻力聯立求壓差。`:'風扇關閉，抽吸壓差為零。');
+  $('wing-explanation').textContent=model.stall?`尾翼 ${state.angle}°：已進入本頁設定的失速近似區，下壓力係數下降、尾流擴散與阻力增加。`:`尾翼 ${state.angle}°：下壓力係數 ${fmt(model.wingCL,2)}。在相同角度與模式下，被動空力隨車速平方變化。`;
+  $('speed-inline').textContent=state.speed;$('accel').textContent=(model.accel>0?'+':'')+fmt(model.accel,2);$('hud-accel').textContent=$('accel').textContent;
+  $('accel-note').textContent=`${model.accel<-.01?'阻力大於推力；放開速度限制後會減速。':model.accel>.01?'推力大於阻力；放開速度限制後會加速。':'水平受力近乎平衡。'}目前只比較 ${state.speed} km/h 當下工況，不推算 0–60 成績。`;
+  for(const [id,value] of [['drive',model.drive],['jet',model.jet],['loss',model.resistance]]){
+    $(id+'-val').textContent=fmt(value/1000,2)+' kN';$(id+'-bar').style.width=clamp(value/35000*100,0,100)+'%';
+  }
+  $('balance-equation').textContent=`(${fmt(model.drive)} + ${fmt(model.jet)} − ${fmt(model.resistance)}) N ÷ ${MODEL.mass} kg = ${fmt(model.accel,2)} m/s²`;
+  $('q-value').textContent=fmt(model.q/1000,2)+' kPa';$('body-value').textContent=fmt(model.bodyForce/MODEL.g)+' kgf';$('wing-value').textContent=fmt(model.wingForce/MODEL.g)+' kgf';
+  $('flow-value').textContent=fmt(model.fanQ,2)+' m³/s';$('power-value').textContent=fmt(model.fanPower/1000,1)+' kW';$('grip-value').textContent=fmt(model.grip/1000,1)+' kN';
+  for(const id of ['speed','angle','fanLevel','rate','throttle']){const input=$(id);input.style.setProperty('--fill',((Number(input.value)-Number(input.min))/(Number(input.max)-Number(input.min))*100)+'%');}
+  document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===state.fanMode)));
+  rebuildLanes();paintParticles();
+}
+for(const id of ['flow','suction','xray','wingflow','jets','sideGuides'])$(id).addEventListener('change',e=>{state[id]=e.target.checked;sync();});
+for(const id of ['speed','angle','fanLevel','rate','throttle'])$(id).addEventListener('input',e=>{state[id]=Number(e.target.value);sync();});
+document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.fanMode=b.dataset.mode;sync();}));
+$('play').addEventListener('click',()=>{state.paused=!state.paused;sync();});
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+$('reset').addEventListener('click',()=>{
+  Object.assign(state,defaults,{paused:matchMedia('(prefers-reduced-motion: reduce)').matches});
+  for(const id of ['flow','suction','xray','wingflow','jets','sideGuides'])$(id).checked=state[id];
+  for(const id of ['speed','angle','fanLevel','rate','throttle'])$(id).value=state[id];
+  for(const lane of lanes)lane.phase=lane.seed.phase||0;
+  setView('rear');
+});
+$('info').addEventListener('click',()=>$('about').showModal());
+controls.addEventListener('start',()=>{cameraGoal=null;});
+let lastMobile=mobile();
+function resize(){const nextMobile=mobile();if(nextMobile!==lastMobile){const scale=nextMobile?1.48:1/1.48;camera.position.multiplyScalar(scale);if(cameraGoal)cameraGoal.multiplyScalar(scale);lastMobile=nextMobile;}const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(host);resize();setView('rear',true);controls.update();
+renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();$('loader').hidden=false;$('load-message').textContent='3D 繪圖連線已中斷，請重新整理頁面。';});
+document.addEventListener('visibilitychange',()=>{last=performance.now();});
+function frame(now){
+  requestAnimationFrame(frame);const dt=Math.min((now-last)/1000,.05);last=now;if(document.hidden)return;
+  if(!state.paused){paintParticles(dt);updateSmoke(dt);if(model.n>0)for(const fan of fans)fan.rotation.y+=dt*state.rate*model.n*15;}
+  if(cameraGoal){
+    // Orbit around the target; a straight chord would pass through the car.
+    const step=1-Math.exp(-dt*5),current=new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target)),goal=new THREE.Spherical().setFromVector3(cameraGoal.clone().sub(controls.target));
+    current.theta+=Math.atan2(Math.sin(goal.theta-current.theta),Math.cos(goal.theta-current.theta))*step;
+    current.phi+=(goal.phi-current.phi)*step;current.radius+=(goal.radius-current.radius)*step;
+    camera.position.setFromSpherical(current).add(controls.target);
+    if(camera.position.distanceTo(cameraGoal)<.015)cameraGoal=null;
+  }
+  controls.update();renderer.render(scene,camera);
+}
+requestAnimationFrame(frame);window.aeroReady=true;clearTimeout(window.aeroLoadTimer);$('loader').hidden=true;
+
+}catch(error){clearTimeout(window.aeroLoadTimer);$('loader').hidden=false;$('load-message').textContent='無法啟動 3D 場景。請確認瀏覽器支援 WebGL，並可連線至 Three.js CDN。';console.error(error);}
+</script>
+</body>
+</html>
