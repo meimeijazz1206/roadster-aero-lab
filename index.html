@@ -47,6 +47,13 @@ html{scroll-behavior:smooth}#app{min-height:740px}a{color:var(--lime)}.top-meta 
 @media(min-width:701px) and (max-width:1050px){.intro h1{font-size:clamp(27px,3.8vw,40px)}}
 @media(max-width:700px){.intro h1{font-size:clamp(27px,7.8vw,43px);letter-spacing:-1px;max-width:calc(100vw - 40px);margin-bottom:10px}.intro .hero-subtitle{font-size:10px;gap:5px 10px;letter-spacing:1.5px;margin-bottom:10px}.intro .hero-tagline{font-size:9px;letter-spacing:.5px}}
 
+/* A direct, optional invitation to support the project. */
+.top-meta{gap:18px}.top-meta .github-star{display:inline-flex;align-items:center;gap:5px;padding:8px 10px;border:1px solid #c7f36966;border-radius:5px;color:var(--lime);background:#c7f3690b;white-space:nowrap;min-height:36px;transition:background .15s,border-color .15s}
+.github-star:hover{background:#c7f3691c;border-color:var(--lime)}.explain-short{display:none}
+.footer-links{display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px}.footer-support{color:#b7c5ce}.footer-support a{margin-left:8px;text-underline-offset:4px}
+@media(max-width:700px){.top-meta{gap:9px}.top-meta .github-star{padding:7px 8px;min-height:36px;font-size:10px;letter-spacing:0}.star-invite,.explain-full{display:none}.explain-short{display:inline}.footer-links{margin-top:16px}}
+@media(max-width:360px){.brand{font-size:9px;gap:4px}.top-meta{gap:8px}.top-meta .github-star{padding:7px 6px}}
+
 :root{--notice:#ffab5c;--notice-line:#ff8a3d80}
 .notice,.notice :is(span,strong,b,small,a),.assumption-table tbody td:last-child{color:var(--notice)!important}
 .legend.is-inactive :is(.legend-title,.gradient,.legend-ticks){opacity:.35}
@@ -59,7 +66,7 @@ html{scroll-behavior:smooth}#app{min-height:740px}a{color:var(--lime)}.top-meta 
 </head>
 <body>
 <main id="app">
-<header><div class="brand"><span class="brand-lab">AERO / LAB</span><span class="brand-x">×</span><span class="brand-name">sense design MEI</span></div><div class="top-meta"><span>物理教學展示</span><span class="pill notice"><i class="dot"></i>教學模型 · 非實車 CFD</span><a href="#physics-details">計算與解說 ↓</a></div></header>
+<header><div class="brand"><span class="brand-lab">AERO / LAB</span><span class="brand-x">×</span><span class="brand-name">sense design MEI</span></div><div class="top-meta"><span>物理教學展示</span><span class="pill notice"><i class="dot"></i>教學模型 · 非實車 CFD</span><a class="explain-link" href="#physics-details"><span class="explain-full">計算與解說</span><span class="explain-short">解說</span> ↓</a><a class="github-star" href="https://github.com/meimeijazz1206/roadster-aero-lab" target="_blank" rel="noopener noreferrer" aria-label="到 GitHub 幫作品點星星（另開分頁）"><span aria-hidden="true">☆</span> GitHub<span class="star-invite"> 給星</span></a></div></header>
 <section class="intro"><div class="eyebrow">GENERATION II / AERODYNAMICS</div><h1>TESLA ROADSTER</h1><p class="hero-subtitle"><span>INVISIBLE FORCE</span><span class="hero-tagline">來自太空科學的力量</span></p><p>探索氣流如何塑造貼地性能。</p><p class="subtitle notice">空氣力學原理示意｜非實車 CFD<br>車型為模擬示意，外觀與規格以官方公布為準。</p></section>
 <aside class="launch-metric" aria-label="Tesla 官方展示加速成績"><div class="launch-label">TESLA 官方展示宣稱</div><strong>0.81<small>秒</small></strong><div class="launch-range">0–60 mph · 約 0–96.6 km/h</div><a href="https://x.com/Tesla/status/2110963770763649487" target="_blank" rel="noopener">查看官方原始影片 ↗</a><div class="launch-note notice">非本頁模擬結果；未獨立驗證。<br>完整測試與起步計時條件尚未取得。</div></aside><div id="scene" class="scene" role="img" aria-label="可拖曳旋轉的白色 Roadster 3D 概念車與空氣流線"><div class="loader" id="loader"><div class="spinner"></div><span id="load-message">正在建立風洞場景…</span></div></div>
 <div class="axis-label">車輛前進 ←<b>來流方向 →</b></div>
@@ -127,7 +134,7 @@ html{scroll-behavior:smooth}#app{min-height:740px}a{color:var(--lime)}.top-meta 
 <div class="source-item"><b>官方機制：多模式吸力與尾翼</b><p><a href="https://x.com/Tesla/status/2110907039493038577" target="_blank" rel="noopener">官方 X 說明</a>提到風扇與地面密封；<a href="https://www.youtube.com/watch?v=qt5p-_tE8d0&t=925s" target="_blank" rel="noopener">15:25 起的自動字幕</a>說明高速通道開啟與可變角度尾翼。<span class="notice">切換速度、開度與係數由本頁假設。</span></p></div>
 <div class="source-item"><b>原理：動壓、受力與噴嘴反作用</b><p>公式依據 <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/lift-equation/" target="_blank" rel="noopener">NASA 升力方程</a>與 <a href="https://www.grc.nasa.gov/WWW/k-12/BGP/thrsteq.html" target="_blank" rel="noopener">NASA 推力方程</a>；<span class="notice">公式正確不代表本頁假設係數是實車數據。</span></p></div>
 <div class="source-item"><b><span class="notice">尚未取得：工程輸入與驗證資料</span></b><p><span class="notice">缺精確車底幾何、實車風扇曲線、尾翼係數、噴嘴時序與風洞量測。600 L 等自動字幕資訊、未確認的 80 kN，以及官方 0.81 秒成績均未用於校準本模型。</span></p></div>
-</div></details><footer class="detail-footer"><span><span class="notice">獨立物理教學展示 · 非 Tesla 官方模擬</span> · 資料查核：2026-10-16<br><span class="notice">實車尺寸、工況與驗證資料未取得，不作性能預測。</span></span><a href="#app">回到風洞 ↑</a></footer>
+</div></details><footer class="detail-footer"><span><span class="notice">獨立物理教學展示 · 非 Tesla 官方模擬</span> · 資料查核：2026-10-16<br><span class="notice">實車尺寸、工況與驗證資料未取得，不作性能預測。</span></span><div class="footer-links"><span class="footer-support">喜歡這個作品？<a href="https://github.com/meimeijazz1206/roadster-aero-lab" target="_blank" rel="noopener noreferrer" aria-label="到 GitHub 點個星星（另開分頁）">⭐ 到 GitHub 點個星星</a></span><a href="#app">回到風洞 ↑</a></div></footer>
 </section>
 <dialog id="about"><h2>看見氣流，也看見假設。</h2><p class="notice">車型為模擬示意，外觀與規格以官方公布為準。</p><p>本頁以官方展示與使用者提供的截圖作為機構、外觀參考，使用簡化物理模型解說受力。<span class="notice">數值、車底結構與流線均不是實車 CFD 結果。</span></p><div class="formula">被動空力：½ρv²SC<br>風扇吸力：Δp × 有效面積<br>瞬時加速度：(驅動力 + 噴嘴推力 − 阻力) / 質量</div><p>粒子依流管近似的局部速度前進與著色；播放倍率只影響動畫。<span class="notice">車速滑桿設定比較工況，不是動力模擬的油門。</span><span class="notice">下壓力使用 kgf（公斤力），不是車輛質量。</span></p><p>風扇與推進器開關會改變受力；圖層開關只改顯示。尾翼與車底模式各自控制。拖曳旋轉、滾輪或雙指縮放；車底鏡頭會開啟 X 光並隱藏地板。暫停凍結動畫，參數仍可調整。</p><p>完整假設、公式與原始資料連結見頁面下方「計算與解說」。本頁仍為單一 HTML，需連網載入 Three.js CDN。</p><form method="dialog"><button>關閉</button></form></dialog>
 <script>
